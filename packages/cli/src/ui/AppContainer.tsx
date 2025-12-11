@@ -786,6 +786,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
     terminalWidth,
     terminalHeight,
     embeddedShellFocused,
+    () => popAllMessagesRef.current?.(), // Pass via ref to avoid dependency cycle
   );
 
   // Auto-accept indicator
@@ -806,6 +807,12 @@ Logging in with Google... Restarting Gemini CLI to continue.
     streamingState,
     submitQuery,
   });
+
+  // Store popAllMessages in a ref so useGeminiStream can access it
+  const popAllMessagesRef = useRef(popAllMessages);
+  useEffect(() => {
+    popAllMessagesRef.current = popAllMessages;
+  }, [popAllMessages]);
 
   cancelHandlerRef.current = useCallback(
     (shouldRestorePrompt: boolean = true) => {
@@ -843,29 +850,13 @@ Logging in with Google... Restarting Gemini CLI to continue.
 
   const handleFinalSubmit = useCallback(
     (submittedValue: string) => {
-      // Automatically send as hint if tools are executing
-      const pendingHistoryItems = [
-        ...pendingSlashCommandHistoryItems,
-        ...pendingGeminiHistoryItems,
-      ];
-
-      if (isToolExecuting(pendingHistoryItems)) {
-        // Send as real-time hint - will be injected before next tool response
-        config.getGeminiClient().addHint(submittedValue);
-      } else {
-        // Normal message queuing
-        addMessage(submittedValue);
-      }
-
+      // All messages go to the message queue
+      // - If idle: auto-submits immediately as new turn
+      // - If busy: queued and drained as hints before tool responses
+      addMessage(submittedValue);
       addInput(submittedValue); // Track input for up-arrow history
     },
-    [
-      addMessage,
-      addInput,
-      config,
-      pendingSlashCommandHistoryItems,
-      pendingGeminiHistoryItems,
-    ],
+    [addMessage, addInput],
   );
 
   const handleClearScreen = useCallback(() => {
