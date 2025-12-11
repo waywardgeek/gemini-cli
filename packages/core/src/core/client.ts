@@ -108,6 +108,14 @@ export class GeminiClient {
     this.getChat().addHistory(content);
   }
 
+  /**
+   * Add a real-time hint that will be injected before the next tool response.
+   * This allows users to provide guidance while tools are executing.
+   */
+  addHint(hint: string) {
+    this.getChat().addHint(hint);
+  }
+
   getChat(): GeminiChat {
     if (!this.chat) {
       throw new Error('Chat not initialized');

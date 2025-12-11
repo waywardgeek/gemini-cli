@@ -833,10 +833,29 @@ Logging in with Google... Restarting Gemini CLI to continue.
 
   const handleFinalSubmit = useCallback(
     (submittedValue: string) => {
-      addMessage(submittedValue);
+      // Automatically send as hint if tools are executing
+      const pendingHistoryItems = [
+        ...pendingSlashCommandHistoryItems,
+        ...pendingGeminiHistoryItems,
+      ];
+
+      if (isToolExecuting(pendingHistoryItems)) {
+        // Send as real-time hint - will be injected before next tool response
+        config.getGeminiClient().addHint(submittedValue);
+      } else {
+        // Normal message queuing
+        addMessage(submittedValue);
+      }
+
       addInput(submittedValue); // Track input for up-arrow history
     },
-    [addMessage, addInput],
+    [
+      addMessage,
+      addInput,
+      config,
+      pendingSlashCommandHistoryItems,
+      pendingGeminiHistoryItems,
+    ],
   );
 
   const handleClearScreen = useCallback(() => {
