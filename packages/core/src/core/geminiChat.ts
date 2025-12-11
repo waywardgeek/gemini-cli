@@ -213,6 +213,8 @@ export class GeminiChat {
   private sendPromise: Promise<void> = Promise.resolve();
   private readonly chatRecordingService: ChatRecordingService;
   private lastPromptTokenCount: number;
+  // Queue for real-time hints from the user
+  private hintQueue: string[] = [];
 
   constructor(
     private readonly config: Config,
@@ -231,6 +233,36 @@ export class GeminiChat {
 
   setSystemInstruction(sysInstr: string) {
     this.systemInstruction = sysInstr;
+  }
+
+  /**
+   * Add a real-time hint to the queue.
+   * Hints will be injected as user messages before the next tool response.
+   */
+  addHint(hint: string) {
+    this.hintQueue.push(hint);
+  }
+
+  /**
+   * Drain all pending hints into the conversation history as user messages.
+   * Called automatically before sending tool responses to the API.
+   */
+  private drainHintsToHistory() {
+    while (this.hintQueue.length > 0) {
+      const hint = this.hintQueue.shift()!;
+      const hintContent = createUserContent(hint);
+      this.history.push(hintContent);
+
+      // Record the hint in chat history
+      // Note: We use a simple model identifier here since hints are informal
+      // and don't require the full model config resolution
+      const currentModel = this.config.getModel?.() || DEFAULT_GEMINI_MODEL;
+      this.chatRecordingService.recordMessage({
+        model: currentModel,
+        type: 'user',
+        content: hint,
+      });
+    }
   }
 
   /**
@@ -291,6 +323,12 @@ export class GeminiChat {
         type: 'user',
         content: userMessageContent,
       });
+    }
+
+    // HINTS: If this is a tool response, drain any pending hints first
+    // This allows the user to provide real-time guidance while tools are executing
+    if (isFunctionResponse(userContent)) {
+      this.drainHintsToHistory();
     }
 
     // Add user content to history ONCE before any attempts.
