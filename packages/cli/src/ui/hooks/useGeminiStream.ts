@@ -38,6 +38,7 @@ import {
   runInDevTraceSpan,
   EDIT_TOOL_NAMES,
   processRestorableToolCalls,
+  getResponseText,
 } from '@google/gemini-cli-core';
 import { type Part, type PartListUnion, FinishReason } from '@google/genai';
 import type {
@@ -117,6 +118,7 @@ export const useGeminiStream = (
   const activeQueryIdRef = useRef<string | null>(null);
   const [isResponding, setIsResponding] = useState<boolean>(false);
   const [thought, setThought] = useState<ThoughtSummary | null>(null);
+  const thoughtAccumulatorRef = useRef<ThoughtSummary[]>([]); // Accumulate thoughts for summarization
   const [pendingHistoryItem, pendingHistoryItemRef, setPendingHistoryItem] =
     useStateAndRef<HistoryItemWithoutId | null>(null);
   const processedMemoryToolsRef = useRef<Set<string>>(new Set());
@@ -798,7 +800,8 @@ export const useGeminiStream = (
       for await (const event of stream) {
         switch (event.type) {
           case ServerGeminiEventType.Thought:
-            setThought(event.value);
+            // Accumulate thoughts for later summarization
+            thoughtAccumulatorRef.current.push(event.value);
             break;
           case ServerGeminiEventType.Content:
             geminiMessageBuffer = handleContentEvent(
@@ -860,6 +863,48 @@ export const useGeminiStream = (
           }
         }
       }
+
+      // THINKING SUMMARIZATION: Summarize accumulated thoughts after stream completes
+      // Thinking happens BEFORE tool calls, so we summarize here to display during tool execution
+      if (thoughtAccumulatorRef.current.length > 0) {
+        try {
+          const thoughts = thoughtAccumulatorRef.current;
+          const thoughtsText = thoughts
+            .map((t, i) => `${i + 1}. ${t.subject}: ${t.description}`)
+            .join('\n');
+
+          const prompt = `Summarize these AI thoughts for an expert developer.
+Strip filler, focus on WHY not HOW, merge redundant info, one sentence max.
+
+${thoughtsText}
+
+Return JSON: {"subject": "short summary", "description": "one sentence"}`;
+
+          const result = await config.getBaseLlmClient().generateContent({
+            modelConfigKey: { model: 'gemini-2.0-flash-exp' },
+            contents: [{ role: 'user', parts: [{ text: prompt }] }],
+            abortSignal: signal,
+            promptId: 'thought-summarization',
+          });
+
+          const responseText = getResponseText(result);
+          if (responseText) {
+            const jsonMatch = responseText.match(/\{[^}]+\}/);
+            if (jsonMatch) {
+              const parsed = JSON.parse(jsonMatch[0]);
+              setThought({
+                subject: parsed.subject || thoughts[0].subject,
+                description: parsed.description || thoughts[0].description,
+              });
+            }
+          }
+        } catch (_error) {
+          // On error, just use first thought
+          setThought(thoughtAccumulatorRef.current[0]);
+        }
+        thoughtAccumulatorRef.current = [];
+      }
+
       if (toolCallRequests.length > 0) {
         scheduleToolCalls(toolCallRequests, signal);
       }
@@ -876,6 +921,8 @@ export const useGeminiStream = (
       handleContextWindowWillOverflowEvent,
       handleCitationEvent,
       handleChatModelEvent,
+      config,
+      setThought,
     ],
   );
   const submitQuery = useCallback(
@@ -940,6 +987,7 @@ export const useGeminiStream = (
               }
               startNewPrompt();
               setThought(null); // Reset thought when starting a new prompt
+              thoughtAccumulatorRef.current = []; // Clear thought accumulator for new turn
             }
 
             setIsResponding(true);
