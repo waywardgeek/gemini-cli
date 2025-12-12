@@ -867,8 +867,12 @@ export const useGeminiStream = (
       // THINKING SUMMARIZATION: Summarize accumulated thoughts after stream completes
       // Thinking happens BEFORE tool calls, so we summarize here to display during tool execution
       if (thoughtAccumulatorRef.current.length > 0) {
+        const thoughts = thoughtAccumulatorRef.current;
+
+        // Immediately show first thought subject in loading indicator while we summarize
+        setThought(thoughts[0]);
+
         try {
-          const thoughts = thoughtAccumulatorRef.current;
           const thoughtsText = thoughts
             .map((t, i) => `${i + 1}. ${t.subject}: ${t.description}`)
             .join('\n');
@@ -892,15 +896,49 @@ Return JSON: {"subject": "short summary", "description": "one sentence"}`;
             const jsonMatch = responseText.match(/\{[^}]+\}/);
             if (jsonMatch) {
               const parsed = JSON.parse(jsonMatch[0]);
-              setThought({
+              const summarized = {
                 subject: parsed.subject || thoughts[0].subject,
                 description: parsed.description || thoughts[0].description,
+              };
+
+              // Update loading indicator with summarized subject
+              setThought(summarized);
+
+              // Prepend full summary to Gemini's response text in chat
+              const summaryText = `**Thinking:** ${summarized.description}\n\n`;
+              setPendingHistoryItem((item) => {
+                if (
+                  item &&
+                  (item.type === 'gemini' || item.type === 'gemini_content')
+                ) {
+                  return {
+                    ...item,
+                    text: summaryText + item.text,
+                  };
+                }
+                return item;
               });
             }
           }
         } catch (_error) {
-          // On error, just use first thought
-          setThought(thoughtAccumulatorRef.current[0]);
+          // On error, loading indicator already shows first thought (set above)
+          // Still prepend to chat on error
+          const firstThought = thoughts[0];
+          if (firstThought) {
+            const summaryText = `**Thinking:** ${firstThought.description}\n\n`;
+            setPendingHistoryItem((item) => {
+              if (
+                item &&
+                (item.type === 'gemini' || item.type === 'gemini_content')
+              ) {
+                return {
+                  ...item,
+                  text: summaryText + item.text,
+                };
+              }
+              return item;
+            });
+          }
         }
         thoughtAccumulatorRef.current = [];
       }
@@ -923,6 +961,7 @@ Return JSON: {"subject": "short summary", "description": "one sentence"}`;
       handleChatModelEvent,
       config,
       setThought,
+      setPendingHistoryItem,
     ],
   );
   const submitQuery = useCallback(
