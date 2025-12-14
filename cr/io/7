@@ -1,0 +1,7 @@
+./AppContainer.tsx:import { calculatePromptWidths } from './components/InputPrompt.js';
+./components/InputPrompt.test.tsx:import type { InputPromptProps } from './InputPrompt.js';
+./components/InputPrompt.test.tsx:import { InputPrompt } from './InputPrompt.js';
+./components/messages/ToolMessage.tsx:import { ShellInputPrompt } from '../ShellInputPrompt.js';
+./components/messages/ShellToolMessage.tsx:import { ShellInputPrompt } from '../ShellInputPrompt.js';
+./components/ShellInputPrompt.test.tsx:import { ShellInputPrompt } from './ShellInputPrompt.js';
+./components/Composer.tsx:import { InputPrompt } from './InputPrompt.js';

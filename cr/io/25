@@ -1,0 +1,29 @@
+On branch main
+Your branch is up to date with 'origin/main'.
+
+You are currently reverting commit 749362852.
+  (all conflicts fixed: run "git revert --continue")
+  (use "git revert --skip" to skip this patch)
+  (use "git revert --abort" to cancel the revert operation)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   packages/cli/src/config/keyBindings.ts
+	modified:   packages/cli/src/ui/AppContainer.tsx
+	modified:   packages/cli/src/ui/contexts/UIActionsContext.tsx
+	modified:   packages/cli/src/ui/contexts/UIStateContext.tsx
+	modified:   packages/cli/src/ui/hooks/useGeminiStream.ts
+	modified:   packages/cli/src/ui/keyMatchers.test.ts
+	modified:   packages/cli/src/ui/types.ts
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   cr/current
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	cr/conversations/pause-unpause-implementation-and-tests.md
+	cr/io/
+	gemini-hints-debug.log
+

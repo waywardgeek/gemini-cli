@@ -1,0 +1,24 @@
+commit 749362852d77c414aefbb8c51bd3eb57d9e4c44d
+Author: Bill Cox <waywardgeek@google.com>
+Date:   Sun Dec 14 12:53:48 2025 -0800
+
+    feat(pause): implement pause/unpause functionality
+
+ packages/cli/src/config/keyBindings.ts            |  5 ++++-
+ packages/cli/src/ui/AppContainer.tsx              |  4 ++++
+ packages/cli/src/ui/contexts/UIActionsContext.tsx |  2 ++
+ packages/cli/src/ui/hooks/useGeminiStream.ts      | 20 ++++++++++++++++++++
+ 4 files changed, 30 insertions(+), 1 deletion(-)
+
+commit 945e82616405bace59e0878aa63c71055260f886
+Author: Bill Cox <waywardgeek@google.com>
+Date:   Sun Dec 14 13:02:07 2025 -0800
+
+    fix(build): resolve remaining typescript errors after pause implementation
+
+ packages/cli/src/ui/AppContainer.tsx            | 5 +++++
+ packages/cli/src/ui/contexts/UIStateContext.tsx | 1 +
+ packages/cli/src/ui/hooks/useGeminiStream.ts    | 1 +
+ packages/cli/src/ui/keyMatchers.test.ts         | 6 ++++++
+ packages/cli/src/ui/types.ts                    | 1 +
+ 5 files changed, 14 insertions(+)

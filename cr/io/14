@@ -1,0 +1,100 @@
+npm run build
+
+> @google/gemini-cli@0.21.0-nightly.20251209.ec9a8c7a7 build
+> node scripts/build.js
+
+
+> @google/gemini-cli@0.21.0-nightly.20251209.ec9a8c7a7 generate
+> node scripts/generate-git-commit-info.js
+
+
+> @google/gemini-cli-a2a-server@0.21.0-nightly.20251209.ec9a8c7a7 build
+> node ../../scripts/build_package.js
+
+Successfully copied files.
+
+> @google/gemini-cli@0.21.0-nightly.20251209.ec9a8c7a7 build
+> node ../../scripts/build_package.js
+
+src/ui/components/InputPrompt.pause.test.tsx(12,7): error TS6133: 'setIsPaused' is declared but its value is never read.
+node:internal/errors:998
+  const err = new Error(message);
+              ^
+
+
+Error: Command failed: tsc --build
+    at genericNodeError (node:internal/errors:998:15)
+    at wrappedFn (node:internal/errors:543:14)
+    at checkExecSyncError (node:child_process:925:11)
+> @google/gemini-cli-core@0.21.0-nightly.20251209.ec9a8c7a7 build
+    at execSync (node:child_process:997:15)
+    at file:///Users/bill/projects/gemini-cli/scripts/build_package.js:30:1
+> node ../../scripts/build_package.js
+
+    at ModuleJob.run (node:internal/modules/esm/module_job:377:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:671:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  status: 2,
+  signal: null,
+  output: [ null, null, null ],
+  pid: 50031,
+  stdout: null,
+  stderr: null
+}
+
+Node.js v25.1.0
+npm error Lifecycle script `build` failed with error:
+npm error code 1
+npm error path /Users/bill/projects/gemini-cli/packages/cli
+npm error workspace @google/gemini-cli@0.21.0-nightly.20251209.ec9a8c7a7
+npm error location /Users/bill/projects/gemini-cli/packages/cli
+npm error command failed
+npm error command sh -c node ../../scripts/build_package.js
+
+Successfully copied files.
+
+> @google/gemini-cli-test-utils@0.21.0-nightly.20251209.ec9a8c7a7 build
+> node ../../scripts/build_package.js
+
+Successfully copied files.
+
+> gemini-cli-vscode-ide-companion@0.21.0-nightly.20251209.ec9a8c7a7 build
+> npm run build:dev
+
+
+> gemini-cli-vscode-ide-companion@0.21.0-nightly.20251209.ec9a8c7a7 build:dev
+> npm run check-types && npm run lint && node esbuild.js
+
+
+> gemini-cli-vscode-ide-companion@0.21.0-nightly.20251209.ec9a8c7a7 check-types
+> tsc --noEmit
+
+
+> gemini-cli-vscode-ide-companion@0.21.0-nightly.20251209.ec9a8c7a7 lint
+> eslint src
+
+[watch] build started
+[watch] build finished
+node:internal/errors:998
+  const err = new Error(message);
+              ^
+
+Error: Command failed: npm run build --workspaces
+    at genericNodeError (node:internal/errors:998:15)
+    at wrappedFn (node:internal/errors:543:14)
+    at checkExecSyncError (node:child_process:925:11)
+    at execSync (node:child_process:997:15)
+    at file:///Users/bill/projects/gemini-cli/scripts/build.js:35:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:377:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:671:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  status: 1,
+  signal: null,
+  output: [ null, null, null ],
+  pid: 49990,
+  stdout: null,
+  stderr: null
+}
+
+Node.js v25.1.0
+make: *** [build] Error 1

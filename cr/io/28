@@ -1,0 +1,47 @@
+npm run build
+
+> @google/gemini-cli@0.21.0-nightly.20251209.ec9a8c7a7 build
+> node scripts/build.js
+
+
+> @google/gemini-cli@0.21.0-nightly.20251209.ec9a8c7a7 generate
+> node scripts/generate-git-commit-info.js
+
+
+> @google/gemini-cli-a2a-server@0.21.0-nightly.20251209.ec9a8c7a7 build
+> node ../../scripts/build_package.js
+
+Successfully copied files.
+
+> @google/gemini-cli@0.21.0-nightly.20251209.ec9a8c7a7 build
+> node ../../scripts/build_package.js
+
+Successfully copied files.
+
+> @google/gemini-cli-core@0.21.0-nightly.20251209.ec9a8c7a7 build
+> node ../../scripts/build_package.js
+
+Successfully copied files.
+
+> @google/gemini-cli-test-utils@0.21.0-nightly.20251209.ec9a8c7a7 build
+> node ../../scripts/build_package.js
+
+Successfully copied files.
+
+> gemini-cli-vscode-ide-companion@0.21.0-nightly.20251209.ec9a8c7a7 build
+> npm run build:dev
+
+
+> gemini-cli-vscode-ide-companion@0.21.0-nightly.20251209.ec9a8c7a7 build:dev
+> npm run check-types && npm run lint && node esbuild.js
+
+
+> gemini-cli-vscode-ide-companion@0.21.0-nightly.20251209.ec9a8c7a7 check-types
+> tsc --noEmit
+
+
+> gemini-cli-vscode-ide-companion@0.21.0-nightly.20251209.ec9a8c7a7 lint
+> eslint src
+
+[watch] build started
+[watch] build finished

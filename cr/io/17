@@ -1,0 +1,19 @@
+
+> @google/gemini-cli@0.21.0-nightly.20251209.ec9a8c7a7 test
+> vitest run pause.test
+
+
+ RUN  v3.2.4 /Users/bill/projects/gemini-cli/packages/cli
+      Coverage enabled with v8
+
+ ✓ src/ui/AppContainer.pause.test.tsx (20 tests) 4ms
+ ✓ src/ui/components/InputPrompt.pause.test.tsx (30 tests) 4ms
+ ✓ src/ui/components/LoadingIndicator.pause.test.tsx (10 tests) 32ms
+
+ Test Files  3 passed (3)
+      Tests  60 passed (60)
+   Start at  15:05:55
+   Duration  2.60s (transform 549ms, setup 41ms, collect 1.53s, tests 41ms, environment 0ms, prepare 144ms)
+
+JUNIT report written to /Users/bill/projects/gemini-cli/packages/cli/junit.xml
+ % Coverage report from v8

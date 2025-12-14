@@ -34,7 +34,6 @@ export const MainContent = () => {
     mainAreaWidth,
     staticAreaMaxItemHeight,
     availableTerminalHeight,
-    isPaused,
   } = uiState;
 
   const historyItems = uiState.history.map((h) => (
@@ -50,30 +49,28 @@ export const MainContent = () => {
   ));
 
   const pendingItems = useMemo(
-    () =>
-      isPaused ? null : (
-        <OverflowProvider>
-          <Box flexDirection="column">
-            {pendingHistoryItems.map((item, i) => (
-              <HistoryItemDisplay
-                key={i}
-                availableTerminalHeight={
-                  uiState.constrainHeight ? availableTerminalHeight : undefined
-                }
-                terminalWidth={mainAreaWidth}
-                item={{ ...item, id: 0 }}
-                isPending={true}
-                isFocused={!uiState.isEditorDialogOpen}
-                activeShellPtyId={uiState.activePtyId}
-                embeddedShellFocused={uiState.embeddedShellFocused}
-              />
-            ))}
-            <ShowMoreLines constrainHeight={uiState.constrainHeight} />
-          </Box>
-        </OverflowProvider>
-      ),
+    () => (
+      <OverflowProvider>
+        <Box flexDirection="column">
+          {pendingHistoryItems.map((item, i) => (
+            <HistoryItemDisplay
+              key={i}
+              availableTerminalHeight={
+                uiState.constrainHeight ? availableTerminalHeight : undefined
+              }
+              terminalWidth={mainAreaWidth}
+              item={{ ...item, id: 0 }}
+              isPending={true}
+              isFocused={!uiState.isEditorDialogOpen}
+              activeShellPtyId={uiState.activePtyId}
+              embeddedShellFocused={uiState.embeddedShellFocused}
+            />
+          ))}
+          <ShowMoreLines constrainHeight={uiState.constrainHeight} />
+        </Box>
+      </OverflowProvider>
+    ),
     [
-      isPaused,
       pendingHistoryItems,
       uiState.constrainHeight,
       availableTerminalHeight,

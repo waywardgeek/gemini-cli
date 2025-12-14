@@ -1,0 +1,10 @@
+945e82616 fix(build): resolve remaining typescript errors after pause implementation
+749362852 feat(pause): implement pause/unpause functionality
+77aeef829 fix(build): resolve typescript errors
+30771c1f4 feat: Add Ctrl+Space shortcut to stop TTS
+d3d77d4a7 Got TTS working with Eloquence on my Mac.
+5aeb7d16e feat: Expose TTS settings in settings schema
+08cd2a833 feat: Implement TTS integration for chat and thinking summaries
+d27f7d65f WIP on main: f83188c81 Enhance thinking summarization with history context
+725b517f3 index on main: f83188c81 Enhance thinking summarization with history context
+f83188c81 Enhance thinking summarization with history context

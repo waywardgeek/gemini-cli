@@ -1,0 +1,2 @@
+945e82616 fix(build): resolve remaining typescript errors after pause implementation
+749362852 feat(pause): implement pause/unpause functionality

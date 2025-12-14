@@ -1,0 +1,238 @@
+commit 945e82616405bace59e0878aa63c71055260f886
+Author: Bill Cox <waywardgeek@google.com>
+Date:   Sun Dec 14 13:02:07 2025 -0800
+
+    fix(build): resolve remaining typescript errors after pause implementation
+
+diff --git a/packages/cli/src/ui/AppContainer.tsx b/packages/cli/src/ui/AppContainer.tsx
+index edcaf969b..47abd4d78 100644
+--- a/packages/cli/src/ui/AppContainer.tsx
++++ b/packages/cli/src/ui/AppContainer.tsx
+@@ -769,6 +769,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
+     loopDetectionConfirmationRequest,
+     lastOutputTime,
+     togglePause,
++    setIsPaused,
+   } = useGeminiStream(
+     config.getGeminiClient(),
+     historyManager.history,
+@@ -1502,6 +1503,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
+       loopDetectionConfirmationRequest,
+       geminiMdFileCount,
+       streamingState,
++      isPaused: streamingState === StreamingState.Paused,
+       initError,
+       pendingGeminiHistoryItems,
+       thought,
+@@ -1653,6 +1655,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
+       warningMessage,
+       bannerData,
+       bannerVisible,
++      togglePause,
+     ],
+   );
+ 
+@@ -1696,6 +1699,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
+       handleApiKeyCancel,
+       setBannerVisible,
+       setEmbeddedShellFocused,
++      setPaused: setIsPaused,
+       togglePause,
+     }),
+     [
+@@ -1732,6 +1736,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
+       handleApiKeyCancel,
+       setBannerVisible,
+       setEmbeddedShellFocused,
++      setIsPaused,
+     ],
+   );
+ 
+diff --git a/packages/cli/src/ui/contexts/UIStateContext.tsx b/packages/cli/src/ui/contexts/UIStateContext.tsx
+index 34e6262f3..736ff57a9 100644
+--- a/packages/cli/src/ui/contexts/UIStateContext.tsx
++++ b/packages/cli/src/ui/contexts/UIStateContext.tsx
+@@ -72,6 +72,7 @@ export interface UIState {
+   loopDetectionConfirmationRequest: LoopDetectionConfirmationRequest | null;
+   geminiMdFileCount: number;
+   streamingState: StreamingState;
++  isPaused: boolean;
+   initError: string | null;
+   pendingGeminiHistoryItems: HistoryItemWithoutId[];
+   thought: ThoughtSummary | null;
+diff --git a/packages/cli/src/ui/hooks/useGeminiStream.ts b/packages/cli/src/ui/hooks/useGeminiStream.ts
+index ccea91132..123f0a33f 100644
+--- a/packages/cli/src/ui/hooks/useGeminiStream.ts
++++ b/packages/cli/src/ui/hooks/useGeminiStream.ts
+@@ -1466,5 +1466,6 @@ Return ONLY valid JSON with this exact format:
+     loopDetectionConfirmationRequest,
+     lastOutputTime,
+     togglePause,
++    setIsPaused,
+   };
+ };
+diff --git a/packages/cli/src/ui/keyMatchers.test.ts b/packages/cli/src/ui/keyMatchers.test.ts
+index f221da634..ed086c8fd 100644
+--- a/packages/cli/src/ui/keyMatchers.test.ts
++++ b/packages/cli/src/ui/keyMatchers.test.ts
+@@ -80,6 +80,7 @@ describe('keyMatchers', () => {
+     [Command.EXPAND_SUGGESTION]: (key: Key) => key.name === 'right',
+     [Command.COLLAPSE_SUGGESTION]: (key: Key) => key.name === 'left',
+     [Command.STOP_TTS]: (key: Key) => key.ctrl && key.name === 'space',
++    [Command.TOGGLE_PAUSE]: (key: Key) => key.name === 'space',
+   };
+ 
+   // Test data for each command with positive and negative test cases
+@@ -342,6 +343,11 @@ describe('keyMatchers', () => {
+       positive: [createKey('space', { ctrl: true })],
+       negative: [createKey('space'), createKey('s', { ctrl: true })],
+     },
++    {
++      command: Command.TOGGLE_PAUSE,
++      positive: [createKey('space')],
++      negative: [createKey('space', { ctrl: true }), createKey('p')],
++    },
+   ];
+ 
+   describe('Data-driven key binding matches original logic', () => {
+diff --git a/packages/cli/src/ui/types.ts b/packages/cli/src/ui/types.ts
+index 32bd291e5..2a9cef5b8 100644
+--- a/packages/cli/src/ui/types.ts
++++ b/packages/cli/src/ui/types.ts
+@@ -35,6 +35,7 @@ export enum StreamingState {
+   Idle = 'idle',
+   Responding = 'responding',
+   WaitingForConfirmation = 'waiting_for_confirmation',
++  Paused = 'paused',
+ }
+ 
+ // Copied from server/src/core/turn.ts for CLI usage
+
+commit 749362852d77c414aefbb8c51bd3eb57d9e4c44d
+Author: Bill Cox <waywardgeek@google.com>
+Date:   Sun Dec 14 12:53:48 2025 -0800
+
+    feat(pause): implement pause/unpause functionality
+
+diff --git a/packages/cli/src/config/keyBindings.ts b/packages/cli/src/config/keyBindings.ts
+index 49ff5d107..02a2f8fee 100644
+--- a/packages/cli/src/config/keyBindings.ts
++++ b/packages/cli/src/config/keyBindings.ts
+@@ -78,6 +78,7 @@ export enum Command {
+ 
+   // TTS Control
+   STOP_TTS = 'stopTts',
++  TOGGLE_PAUSE = 'togglePause',
+ }
+ 
+ /**
+@@ -220,6 +221,7 @@ export const defaultKeyBindings: KeyBindingConfig = {
+ 
+   // TTS Control
+   [Command.STOP_TTS]: [{ key: 'space', ctrl: true }],
++  [Command.TOGGLE_PAUSE]: [{ key: 'space' }],
+ };
+ 
+ interface CommandCategory {
+@@ -318,7 +320,7 @@ export const commandCategories: readonly CommandCategory[] = [
+   },
+   {
+     title: 'Accessibility',
+-    commands: [Command.STOP_TTS],
++    commands: [Command.STOP_TTS, Command.TOGGLE_PAUSE],
+   },
+ ];
+ 
+@@ -374,4 +376,5 @@ export const commandDescriptions: Readonly<Record<Command, string>> = {
+   [Command.EXPAND_SUGGESTION]: 'Expand an inline suggestion.',
+   [Command.COLLAPSE_SUGGESTION]: 'Collapse an inline suggestion.',
+   [Command.STOP_TTS]: 'Stop the current text-to-speech output.',
++  [Command.TOGGLE_PAUSE]: 'Pause or unpause the response.',
+ };
+diff --git a/packages/cli/src/ui/AppContainer.tsx b/packages/cli/src/ui/AppContainer.tsx
+index d682b823d..edcaf969b 100644
+--- a/packages/cli/src/ui/AppContainer.tsx
++++ b/packages/cli/src/ui/AppContainer.tsx
+@@ -768,6 +768,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
+     activePtyId,
+     loopDetectionConfirmationRequest,
+     lastOutputTime,
++    togglePause,
+   } = useGeminiStream(
+     config.getGeminiClient(),
+     historyManager.history,
+@@ -1259,6 +1260,8 @@ Logging in with Google... Restarting Gemini CLI to continue.
+         }
+       } else if (keyMatchers[Command.STOP_TTS](key)) {
+         ttsService.stop();
++      } else if (keyMatchers[Command.TOGGLE_PAUSE](key)) {
++        togglePause();
+       }
+     },
+     [
+@@ -1693,6 +1696,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
+       handleApiKeyCancel,
+       setBannerVisible,
+       setEmbeddedShellFocused,
++      togglePause,
+     }),
+     [
+       handleThemeSelect,
+diff --git a/packages/cli/src/ui/contexts/UIActionsContext.tsx b/packages/cli/src/ui/contexts/UIActionsContext.tsx
+index 120def8b1..1ad13ed7e 100644
+--- a/packages/cli/src/ui/contexts/UIActionsContext.tsx
++++ b/packages/cli/src/ui/contexts/UIActionsContext.tsx
+@@ -56,6 +56,8 @@ export interface UIActions {
+   handleApiKeyCancel: () => void;
+   setBannerVisible: (visible: boolean) => void;
+   setEmbeddedShellFocused: (value: boolean) => void;
++  setPaused: (value: boolean) => void;
++  togglePause: () => void;
+ }
+ 
+ export const UIActionsContext = createContext<UIActions | null>(null);
+diff --git a/packages/cli/src/ui/hooks/useGeminiStream.ts b/packages/cli/src/ui/hooks/useGeminiStream.ts
+index 8267ee565..ccea91132 100644
+--- a/packages/cli/src/ui/hooks/useGeminiStream.ts
++++ b/packages/cli/src/ui/hooks/useGeminiStream.ts
+@@ -253,7 +253,16 @@ export const useGeminiStream = (
+     prevActiveShellPtyIdRef.current = activeShellPtyId;
+   }, [activeShellPtyId, addItem]);
+ 
++  const [isPaused, setIsPaused] = useState(false);
++
++  const togglePause = useCallback(() => {
++    setIsPaused((prev) => !prev);
++  }, []);
++
+   const streamingState = useMemo(() => {
++    if (isPaused) {
++      return StreamingState.Paused;
++    }
+     if (toolCalls.some((tc) => tc.status === 'awaiting_approval')) {
+       return StreamingState.WaitingForConfirmation;
+     }
+@@ -805,6 +814,16 @@ export const useGeminiStream = (
+       let fullResponseText = '';
+       const toolCallRequests: ToolCallRequestInfo[] = [];
+       for await (const event of stream) {
++        if (isPaused) {
++          await new Promise<void>((resolve) => {
++            const interval = setInterval(() => {
++              if (!isPaused) {
++                clearInterval(interval);
++                resolve();
++              }
++            }, 100);
++          });
++        }
+         switch (event.type) {
+           case ServerGeminiEventType.Thought:
+             // Accumulate thoughts for later summarization
+@@ -1446,5 +1465,6 @@ Return ONLY valid JSON with this exact format:
+     activePtyId,
+     loopDetectionConfirmationRequest,
+     lastOutputTime,
++    togglePause,
+   };
+ };

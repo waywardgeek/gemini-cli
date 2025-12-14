@@ -1,0 +1,26 @@
+
+> @google/gemini-cli@0.21.0-nightly.20251209.ec9a8c7a7 pre-commit
+> node scripts/pre-commit.js
+
+[STARTED] Backing up original state...
+[COMPLETED] Backed up original state in git stash (9cffe04ef)
+[STARTED] Running tasks for staged files...
+[STARTED] package.json — 7 files
+[STARTED] *.{js,jsx,ts,tsx} — 7 files
+[STARTED] eslint.config.js — 0 files
+[STARTED] *.{json,md} — 0 files
+[SKIPPED] eslint.config.js — no files
+[SKIPPED] *.{json,md} — no files
+[STARTED] prettier --write
+[COMPLETED] prettier --write
+[STARTED] eslint --fix --max-warnings 0 --no-warn-ignored
+[COMPLETED] eslint --fix --max-warnings 0 --no-warn-ignored
+[COMPLETED] *.{js,jsx,ts,tsx} — 7 files
+[COMPLETED] package.json — 7 files
+[COMPLETED] Running tasks for staged files...
+[STARTED] Applying modifications from tasks...
+[COMPLETED] Applying modifications from tasks...
+[STARTED] Cleaning up temporary files...
+[COMPLETED] Cleaning up temporary files...
+[main bd03f8dba] Revert pause/unpause implementation - state desync issues
+ 7 files changed, 1 insertion(+), 44 deletions(-)
