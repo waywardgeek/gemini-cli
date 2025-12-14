@@ -758,6 +758,8 @@ Logging in with Google... Restarting Gemini CLI to continue.
     activePtyId,
     loopDetectionConfirmationRequest,
     lastOutputTime,
+    isPaused,
+    setIsPaused,
   } = useGeminiStream(
     config.getGeminiClient(),
     historyManager.history,
@@ -879,7 +881,8 @@ Logging in with Google... Restarting Gemini CLI to continue.
     !isProcessing &&
     !!slashCommands &&
     (streamingState === StreamingState.Idle ||
-      streamingState === StreamingState.Responding) &&
+      streamingState === StreamingState.Responding ||
+      streamingState === StreamingState.Paused) &&
     !proQuotaRequest;
 
   const [controlsHeight, setControlsHeight] = useState(0);
@@ -1489,6 +1492,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
       loopDetectionConfirmationRequest,
       geminiMdFileCount,
       streamingState,
+      isPaused,
       initError,
       pendingGeminiHistoryItems,
       thought,
@@ -1578,6 +1582,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
       loopDetectionConfirmationRequest,
       geminiMdFileCount,
       streamingState,
+      isPaused,
       initError,
       pendingGeminiHistoryItems,
       thought,
@@ -1686,6 +1691,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
       handleApiKeyCancel,
       setBannerVisible,
       setEmbeddedShellFocused,
+      setIsPaused,
     }),
     [
       handleThemeSelect,
@@ -1721,6 +1727,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
       handleApiKeyCancel,
       setBannerVisible,
       setEmbeddedShellFocused,
+      setIsPaused,
     ],
   );
 

@@ -137,3 +137,346 @@
 [2025-12-14T23:12:44.305Z] [ERROR] 5 frames rendered while the app was idle in the past second. This likely indicates severe infinite loop React state management bugs.
 [2025-12-14T23:12:45.555Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
 [2025-12-14T23:12:45.555Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:41:57.071Z] [LOG] Authenticated via "gemini-api-key".
+[2025-12-14T23:41:57.097Z] [LOG] [STARTUP] StartupProfiler.flush() called with 10 phases
+[2025-12-14T23:41:57.097Z] [LOG] [STARTUP] Recording metric for phase: cli_startup duration: 67.20616700000005
+[2025-12-14T23:41:57.097Z] [LOG] [STARTUP] Recording metric for phase: load_settings duration: 0.7169579999999769
+[2025-12-14T23:41:57.097Z] [LOG] [STARTUP] Recording metric for phase: migrate_settings duration: 0.4888750000000073
+[2025-12-14T23:41:57.097Z] [LOG] [STARTUP] Recording metric for phase: parse_arguments duration: 7.16112499999997
+[2025-12-14T23:41:57.097Z] [LOG] [STARTUP] Recording metric for phase: load_cli_config duration: 27.93033300000002
+[2025-12-14T23:41:57.097Z] [LOG] [STARTUP] Recording metric for phase: initialize_app duration: 27.899250000000052
+[2025-12-14T23:41:57.097Z] [LOG] [STARTUP] Recording metric for phase: authenticate duration: 26.52541599999995
+[2025-12-14T23:41:57.097Z] [LOG] [STARTUP] Recording metric for phase: discover_tools duration: 11.964249999999993
+[2025-12-14T23:41:57.097Z] [WARN] [STARTUP] Phase 'load_builtin_commands' was started but never ended. Skipping metrics.
+[2025-12-14T23:41:57.097Z] [LOG] [STARTUP] Recording metric for phase: initialize_mcp_clients duration: 0.15537499999993543
+[2025-12-14T23:41:57.118Z] [DEBUG] [DEBUG] [IDEClient] Failed to read IDE connection directory: Error: ENOENT: no such file or directory, scandir '/var/folders/p_/11vk6y114xq7k9g5r_pc3yv80000gn/T/gemini/ide'
+    at async Object.readdir (node:internal/fs/promises:958:18)
+    at async IdeClient.getConnectionConfigFromFile (file:///Users/bill/projects/gemini-cli/packages/core/dist/src/ide/ide-client.js:445:25)
+    at async file:///Users/bill/projects/gemini-cli/packages/core/dist/src/ide/ide-client.js:74:43 {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: '/var/folders/p_/11vk6y114xq7k9g5r_pc3yv80000gn/T/gemini/ide'
+}
+[2025-12-14T23:41:57.533Z] [DEBUG] [SessionSummary] Generated: "Test pause/unpause by listing files repeatedly."
+[2025-12-14T23:41:57.535Z] [DEBUG] [SessionSummary] Saved summary for /Users/bill/.gemini/tmp/f9dbdbe4b4d132730b992c3340fbc370b42b03e38fd2bdca7fb5810a14be6bdc/chats/session-2025-12-14T23-07-ed21e9e4.json: "Test pause/unpause by listing files repeatedly."
+[2025-12-14T23:42:51.270Z] [DEBUG] [TTS] Speaking: Thinking: After clarifying the looping and pausing...
+[2025-12-14T23:42:51.297Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:42:51.298Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:42:54.501Z] [DEBUG] [TTS] Speaking: I will list the files in the current directory....
+[2025-12-14T23:42:55.020Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:42:55.020Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:42:55.509Z] [DEBUG] [TTS] Speaking: Thinking: I've listed files and am ready to repeat...
+[2025-12-14T23:42:57.240Z] [DEBUG] [TTS] Speaking: I will list the files in the current directory aga...
+[2025-12-14T23:42:58.572Z] [DEBUG] [TTS] Speaking: Thinking: Having already listed the files, I'm poi...
+[2025-12-14T23:42:58.574Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:42:58.574Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:43:00.931Z] [DEBUG] [TTS] Speaking: I will list the files in the current directory aga...
+[2025-12-14T23:43:02.687Z] [DEBUG] [TTS] Speaking: Thinking: I've listed the files four times and am ...
+[2025-12-14T23:43:02.689Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:43:02.689Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:43:04.654Z] [DEBUG] [TTS] Speaking: I will list the files in the current directory aga...
+[2025-12-14T23:48:51.364Z] [LOG] Authenticated via "gemini-api-key".
+[2025-12-14T23:48:51.385Z] [LOG] [STARTUP] StartupProfiler.flush() called with 10 phases
+[2025-12-14T23:48:51.385Z] [LOG] [STARTUP] Recording metric for phase: cli_startup duration: 68.18620800000008
+[2025-12-14T23:48:51.385Z] [LOG] [STARTUP] Recording metric for phase: load_settings duration: 0.7150000000000318
+[2025-12-14T23:48:51.385Z] [LOG] [STARTUP] Recording metric for phase: migrate_settings duration: 0.4802919999999631
+[2025-12-14T23:48:51.385Z] [LOG] [STARTUP] Recording metric for phase: parse_arguments duration: 6.94074999999998
+[2025-12-14T23:48:51.385Z] [LOG] [STARTUP] Recording metric for phase: load_cli_config duration: 25.280583999999976
+[2025-12-14T23:48:51.385Z] [LOG] [STARTUP] Recording metric for phase: initialize_app duration: 31.757749999999987
+[2025-12-14T23:48:51.385Z] [LOG] [STARTUP] Recording metric for phase: authenticate duration: 30.404250000000047
+[2025-12-14T23:48:51.385Z] [LOG] [STARTUP] Recording metric for phase: discover_tools duration: 12.327208000000041
+[2025-12-14T23:48:51.385Z] [WARN] [STARTUP] Phase 'load_builtin_commands' was started but never ended. Skipping metrics.
+[2025-12-14T23:48:51.385Z] [LOG] [STARTUP] Recording metric for phase: initialize_mcp_clients duration: 0.15970899999990706
+[2025-12-14T23:48:51.389Z] [DEBUG] [SessionSummary] Most recent session has 1 user message(s), skipping (need more than 1)
+[2025-12-14T23:48:51.409Z] [DEBUG] [DEBUG] [IDEClient] Failed to read IDE connection directory: Error: ENOENT: no such file or directory, scandir '/var/folders/p_/11vk6y114xq7k9g5r_pc3yv80000gn/T/gemini/ide'
+    at async Object.readdir (node:internal/fs/promises:958:18)
+    at async IdeClient.getConnectionConfigFromFile (file:///Users/bill/projects/gemini-cli/packages/core/dist/src/ide/ide-client.js:445:25)
+    at async file:///Users/bill/projects/gemini-cli/packages/core/dist/src/ide/ide-client.js:74:43 {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: '/var/folders/p_/11vk6y114xq7k9g5r_pc3yv80000gn/T/gemini/ide'
+}
+[2025-12-14T23:49:37.321Z] [DEBUG] [TTS] Speaking: Thinking: Implemented list_directory, listed files...
+[2025-12-14T23:49:37.348Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:49:37.348Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:49:39.863Z] [DEBUG] [TTS] Speaking: Here is the file list. I am ready for the next tur...
+[2025-12-14T23:50:20.261Z] [DEBUG] [TTS] Speaking: Thinking: Testing list_directory with multiple cal...
+[2025-12-14T23:50:20.264Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:50:20.264Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:50:20.289Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:50:20.289Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:50:20.309Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:50:20.309Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:50:20.321Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:50:20.321Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:14.230Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:14.230Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:14.262Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:14.262Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:14.280Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:14.281Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:14.290Z] [ERROR] A flicker frame was detected. This will cause UI instability. Type `/profile` for more info.
+[2025-12-14T23:51:14.294Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:14.294Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:14.313Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:14.313Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:14.325Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:14.325Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:14.337Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:14.337Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:14.348Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:14.348Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:19.994Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:19.994Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:41.876Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:41.876Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:41.894Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:41.894Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:41.906Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:41.906Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:41.918Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:41.918Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:41.929Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:41.929Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:41.942Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:41.942Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:41.952Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:41.952Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:45.478Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:45.478Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:45.506Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:45.506Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:45.521Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:45.521Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:45.534Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:45.534Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:45.547Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:45.547Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:45.561Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:45.561Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:45.572Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:45.572Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:45.581Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:45.581Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:48.637Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:48.637Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:52.898Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:52.898Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:52.914Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:52.914Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:52.927Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:52.927Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:52.939Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:52.939Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:52.950Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:52.950Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:52.963Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:52.963Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:52.973Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:52.973Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:56.239Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:56.239Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:56.269Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:56.269Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:56.287Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:56.287Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:56.302Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:56.302Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:56.321Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:56.321Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:56.335Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:56.335Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:56.346Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:56.346Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:56.358Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:56.358Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:59.483Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:59.483Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:59.511Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:59.511Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:59.528Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:59.528Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:59.542Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:59.542Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:59.554Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:59.554Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:59.568Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:59.568Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:59.579Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:59.579Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:51:59.590Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:51:59.590Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:02.831Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:02.831Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:02.857Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:02.857Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:02.873Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:02.873Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:02.891Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:02.891Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:02.903Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:02.903Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:02.917Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:02.917Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:02.929Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:02.929Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:02.940Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:02.940Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:05.995Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:05.995Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:06.020Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:06.020Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:06.034Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:06.034Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:06.048Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:06.048Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:06.062Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:06.062Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:06.074Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:06.074Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:06.085Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:06.085Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:06.100Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:06.100Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:09.477Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:09.477Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:21.807Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:21.807Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:21.825Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:21.825Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:21.838Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:21.838Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:21.851Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:21.851Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:21.861Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:21.861Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:21.881Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:21.881Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:21.893Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:21.893Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:25.211Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:25.211Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:25.240Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:25.241Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:25.261Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:25.261Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:25.275Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:25.275Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:25.288Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:25.288Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:25.300Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:25.300Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:25.313Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:25.313Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:25.326Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:25.326Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:29.386Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:29.386Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:29.412Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:29.412Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:29.433Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:29.433Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:29.446Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:29.446Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:29.458Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:29.458Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:29.471Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:29.471Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:29.486Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:29.486Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:29.498Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:29.498Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:32.591Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:32.591Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:32.621Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:32.621Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:32.639Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:32.639Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:32.662Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:32.662Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:32.678Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:32.678Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:32.689Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:32.689Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:32.700Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:32.701Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:32.716Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:32.716Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:37.424Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:37.425Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:37.457Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:37.457Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:37.472Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:37.472Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:37.485Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:37.485Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:37.500Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:37.500Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:37.515Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:37.515Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:37.528Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:37.528Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:37.539Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:37.539Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:40.812Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:40.812Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:40.841Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:40.841Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:40.863Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:40.863Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:40.877Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:40.877Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:40.890Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:40.890Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:40.906Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:40.906Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:40.918Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:40.918Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:40.931Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:40.931Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:49.326Z] [DEBUG] [TTS] Speaking: Thinking: I'm creating a chain of 20 list_director...
+[2025-12-14T23:52:49.328Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:49.328Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:49.368Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:49.368Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:49.400Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:49.400Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:49.420Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:49.420Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:49.445Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:49.446Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:49.472Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:49.472Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:49.498Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:49.498Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:49.530Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:49.530Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:49.549Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:49.549Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:49.561Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:49.561Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:49.573Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:49.573Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:49.588Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:49.588Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:49.600Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:49.600Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:49.611Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:49.611Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:49.627Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:49.627Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:49.639Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:49.639Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:49.651Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:49.651Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:49.667Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:49.667Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:49.679Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:49.679Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:49.691Z] [DEBUG] [PolicyEngine.check] toolCall.name: list_directory, stringifiedArgs: undefined
+[2025-12-14T23:52:49.691Z] [DEBUG] [PolicyEngine.check] MATCHED rule: toolName=list_directory, decision=allow, priority=1.05, argsPattern=none
+[2025-12-14T23:52:49.708Z] [DEBUG] [HINTS] 💧 Draining queued messages as hints: Please stop
+[2025-12-14T23:52:54.177Z] [DEBUG] [TTS] Speaking: Thinking: The directory listing process was stoppe...
+[2025-12-14T23:52:56.536Z] [DEBUG] [TTS] Speaking: Stopped as requested. How can I help you next?...

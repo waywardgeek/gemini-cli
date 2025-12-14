@@ -1,8 +1,0 @@
- packages/cli/src/config/keyBindings.ts            |  5 ++++-
- packages/cli/src/ui/AppContainer.tsx              |  9 +++++++++
- packages/cli/src/ui/contexts/UIActionsContext.tsx |  2 ++
- packages/cli/src/ui/contexts/UIStateContext.tsx   |  1 +
- packages/cli/src/ui/hooks/useGeminiStream.ts      | 21 +++++++++++++++++++++
- packages/cli/src/ui/keyMatchers.test.ts           |  6 ++++++
- packages/cli/src/ui/types.ts                      |  1 +
- 7 files changed, 44 insertions(+), 1 deletion(-)

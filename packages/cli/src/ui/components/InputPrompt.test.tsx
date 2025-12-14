@@ -254,6 +254,8 @@ describe('InputPrompt', () => {
       setQueueErrorMessage: vi.fn(),
       streamingState: StreamingState.Idle,
       setBannerVisible: vi.fn(),
+      isPaused: false,
+      setIsPaused: vi.fn(),
     };
   });
 

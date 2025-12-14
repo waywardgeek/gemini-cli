@@ -119,6 +119,7 @@ export const useGeminiStream = (
   const turnCancelledRef = useRef(false);
   const activeQueryIdRef = useRef<string | null>(null);
   const [isResponding, setIsResponding] = useState<boolean>(false);
+  const [isPaused, setIsPaused] = useState<boolean>(false);
   const [thought, setThought] = useState<ThoughtSummary | null>(null);
   const thoughtAccumulatorRef = useRef<ThoughtSummary[]>([]); // Accumulate thoughts for summarization
   const thinkingHistoryRef = useRef<string>(''); // Keep history of thinking for the current tool chain
@@ -141,6 +142,7 @@ export const useGeminiStream = (
     markToolsAsSubmitted,
     setToolCallsForDisplay,
     cancelAllToolCalls,
+    setPausedToolExecution,
     lastToolOutputTime,
   ] = useReactToolScheduler(
     async (completedToolCallsFromScheduler) => {
@@ -237,6 +239,11 @@ export const useGeminiStream = (
 
   const activePtyId = activeShellPtyId || activeToolPtyId;
 
+  // Sync pause state with tool execution
+  useEffect(() => {
+    setPausedToolExecution(isPaused);
+  }, [isPaused, setPausedToolExecution]);
+
   useEffect(() => {
     if (!activePtyId) {
       setShellInputFocused(false);
@@ -263,7 +270,8 @@ export const useGeminiStream = (
     if (toolCalls.some((tc) => tc.status === 'awaiting_approval')) {
       return StreamingState.WaitingForConfirmation;
     }
-    if (
+
+    const isExecutingTools =
       isResponding ||
       toolCalls.some(
         (tc) =>
@@ -275,12 +283,17 @@ export const useGeminiStream = (
             tc.status === 'cancelled') &&
             !(tc as TrackedCompletedToolCall | TrackedCancelledToolCall)
               .responseSubmittedToGemini),
-      )
-    ) {
+      );
+
+    if (isExecutingTools) {
+      // If paused while executing tools, return Paused state
+      if (isPaused) {
+        return StreamingState.Paused;
+      }
       return StreamingState.Responding;
     }
     return StreamingState.Idle;
-  }, [isResponding, toolCalls]);
+  }, [isResponding, toolCalls, isPaused]);
 
   useEffect(() => {
     if (
@@ -1449,5 +1462,7 @@ Return ONLY valid JSON with this exact format:
     activePtyId,
     loopDetectionConfirmationRequest,
     lastOutputTime,
+    isPaused,
+    setIsPaused,
   };
 };

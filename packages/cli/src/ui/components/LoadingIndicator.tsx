@@ -37,6 +37,29 @@ export const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({
     return null;
   }
 
+  // Show prominent PAUSED indicator
+  if (streamingState === StreamingState.Paused) {
+    return (
+      <Box paddingLeft={0} flexDirection="column">
+        <Box
+          width="100%"
+          flexDirection={isNarrow ? 'column' : 'row'}
+          alignItems="center"
+        >
+          <Box marginRight={1}>
+            <Text bold color="yellow">
+              ⏸ PAUSED
+            </Text>
+          </Box>
+          <Text color={theme.text.secondary}>
+            (press enter to send message, backspace to empty, or space when
+            empty to resume)
+          </Text>
+        </Box>
+      </Box>
+    );
+  }
+
   // Prioritize the interactive shell waiting phrase over the thought subject
   // because it conveys an actionable state for the user (waiting for input).
   const primaryText =

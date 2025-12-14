@@ -86,6 +86,8 @@ export interface InputPromptProps {
   popAllMessages?: () => string | undefined;
   suggestionsPosition?: 'above' | 'below';
   setBannerVisible: (visible: boolean) => void;
+  isPaused: boolean;
+  setIsPaused: (paused: boolean) => void;
 }
 
 // The input content, input container, and input suggestions list may have different widths
@@ -128,6 +130,8 @@ export const InputPrompt: React.FC<InputPromptProps> = ({
   popAllMessages,
   suggestionsPosition = 'below',
   setBannerVisible,
+  isPaused,
+  setIsPaused,
 }) => {
   const kittyProtocol = useKittyKeyboardProtocol();
   const isShellFocused = useShellFocusState();
@@ -218,6 +222,10 @@ export const InputPrompt: React.FC<InputPromptProps> = ({
       if (shellModeActive) {
         shellHistory.addCommandToHistory(submittedValue);
       }
+      // Unpause if paused - user is submitting a message
+      if (isPaused) {
+        setIsPaused(false);
+      }
       // Clear the buffer *before* calling onSubmit to prevent potential re-submission
       // if onSubmit triggers a re-render while the buffer still holds the old value.
       buffer.setText('');
@@ -232,6 +240,8 @@ export const InputPrompt: React.FC<InputPromptProps> = ({
       shellModeActive,
       shellHistory,
       resetReverseSearchCompletionState,
+      isPaused,
+      setIsPaused,
     ],
   );
 
@@ -417,6 +427,36 @@ export const InputPrompt: React.FC<InputPromptProps> = ({
         // Ensure we never accidentally interpret paste as regular input.
         buffer.handleInput(key);
         return;
+      }
+
+      // **Pause/Unpause Logic**
+      // When user types during tool execution, auto-pause
+      const isTextInputKey =
+        key.sequence &&
+        key.sequence.length === 1 &&
+        !key.ctrl &&
+        !key.meta &&
+        key.name !== 'return' &&
+        key.name !== 'escape' &&
+        key.name !== 'tab';
+
+      if (
+        streamingState === StreamingState.Responding &&
+        (isTextInputKey || key.name === 'space')
+      ) {
+        setIsPaused(true);
+      }
+
+      // When paused, unpause if: Enter (handled in submit), backspace to empty, or space when empty
+      if (streamingState === StreamingState.Paused) {
+        if (key.name === 'backspace' && buffer.text.length === 1) {
+          // About to backspace to empty - unpause
+          setIsPaused(false);
+        } else if (key.name === 'space' && buffer.text === '') {
+          // Space when empty - unpause (only when truly empty, not just whitespace)
+          setIsPaused(false);
+          return; // Don't add the space
+        }
       }
 
       if (vimHandleInput && vimHandleInput(key)) {
@@ -863,6 +903,8 @@ export const InputPrompt: React.FC<InputPromptProps> = ({
       kittyProtocol.enabled,
       tryLoadQueuedMessages,
       setBannerVisible,
+      streamingState,
+      setIsPaused,
     ],
   );
 

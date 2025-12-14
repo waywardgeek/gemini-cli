@@ -63,6 +63,7 @@ export type TrackedToolCall =
   | TrackedCancelledToolCall;
 
 export type CancelAllFn = (signal: AbortSignal) => void;
+export type SetPausedFn = (paused: boolean) => void;
 
 export function useReactToolScheduler(
   onComplete: (tools: CompletedToolCall[]) => Promise<void>,
@@ -74,6 +75,7 @@ export function useReactToolScheduler(
   MarkToolsAsSubmittedFn,
   React.Dispatch<React.SetStateAction<TrackedToolCall[]>>,
   CancelAllFn,
+  SetPausedFn,
   number,
 ] {
   const [toolCallsForDisplay, setToolCallsForDisplay] = useState<
@@ -205,12 +207,20 @@ export function useReactToolScheduler(
     [scheduler],
   );
 
+  const setPaused = useCallback(
+    (paused: boolean) => {
+      scheduler.setPaused(paused);
+    },
+    [scheduler],
+  );
+
   return [
     toolCallsForDisplay,
     schedule,
     markToolsAsSubmitted,
     setToolCallsForDisplay,
     cancelAllToolCalls,
+    setPaused,
     lastToolOutputTime,
   ];
 }

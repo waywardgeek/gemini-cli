@@ -179,6 +179,8 @@ export const Composer = () => {
           }
           setQueueErrorMessage={uiActions.setQueueErrorMessage}
           streamingState={uiState.streamingState}
+          isPaused={uiState.isPaused}
+          setIsPaused={uiActions.setIsPaused}
           suggestionsPosition={suggestionsPosition}
           onSuggestionsVisibilityChange={setSuggestionsVisible}
         />

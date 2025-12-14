@@ -1,46 +1,59 @@
+On branch main
+Your branch is ahead of 'origin/main' by 2 commits.
+  (use "git push" to publish your local commits)
 
-> @google/gemini-cli@0.21.0-nightly.20251209.ec9a8c7a7 build
-> node ../../scripts/build_package.js
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   packages/cli/src/test-utils/render.tsx
+	modified:   packages/cli/src/ui/AppContainer.tsx
+	modified:   packages/cli/src/ui/components/Composer.tsx
+	modified:   packages/cli/src/ui/components/InputPrompt.test.tsx
+	modified:   packages/cli/src/ui/components/InputPrompt.tsx
+	modified:   packages/cli/src/ui/components/LoadingIndicator.tsx
+	modified:   packages/cli/src/ui/contexts/UIActionsContext.tsx
+	modified:   packages/cli/src/ui/contexts/UIStateContext.tsx
+	modified:   packages/cli/src/ui/hooks/useGeminiStream.ts
+	modified:   packages/cli/src/ui/hooks/useReactToolScheduler.ts
+	modified:   packages/cli/src/ui/types.ts
+	modified:   packages/core/src/core/coreToolScheduler.ts
 
-src/ui/components/InputPrompt.tsx(451,16): error TS2339: Property 'return' does not exist on type 'Key'.
-src/ui/components/InputPrompt.tsx(452,16): error TS2339: Property 'escape' does not exist on type 'Key'.
-src/ui/components/InputPrompt.tsx(453,16): error TS2339: Property 'tab' does not exist on type 'Key'.
-src/ui/components/InputPrompt.tsx(454,16): error TS2339: Property 'upArrow' does not exist on type 'Key'.
-src/ui/components/InputPrompt.tsx(455,16): error TS2339: Property 'downArrow' does not exist on type 'Key'.
-src/ui/components/InputPrompt.tsx(456,16): error TS2339: Property 'leftArrow' does not exist on type 'Key'.
-src/ui/components/InputPrompt.tsx(457,16): error TS2339: Property 'rightArrow' does not exist on type 'Key'.
-src/ui/components/InputPrompt.tsx(458,16): error TS2339: Property 'pageDown' does not exist on type 'Key'.
-node:internal/errors:998
-  const err = new Error(message);
-              ^
-src/ui/components/InputPrompt.tsx(459,16): error TS2339: Property 'pageUp' does not exist on type 'Key'.
-src/ui/components/InputPrompt.tsx(460,16): error TS2339: Property 'delete' does not exist on type 'Key'.
-src/ui/components/InputPrompt.tsx(461,16): error TS2339: Property 'backspace' does not exist on type 'Key'.
-src/ui/components/LoadingIndicator.tsx(51,39): error TS2339: Property 'warning' does not exist on type '{ primary: string; secondary: string; link: string; accent: string; response: string; }'.
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   cr/current
+	deleted:    cr/io/10
+	deleted:    cr/io/11
+	deleted:    cr/io/12
+	deleted:    cr/io/13
+	deleted:    cr/io/14
+	deleted:    cr/io/15
+	deleted:    cr/io/16
+	deleted:    cr/io/17
+	deleted:    cr/io/18
+	deleted:    cr/io/19
+	deleted:    cr/io/20
+	deleted:    cr/io/21
+	deleted:    cr/io/22
+	deleted:    cr/io/23
+	deleted:    cr/io/24
+	deleted:    cr/io/25
+	deleted:    cr/io/26
+	deleted:    cr/io/27
+	deleted:    cr/io/28
+	modified:   cr/io/5
+	modified:   cr/io/6
+	modified:   cr/io/7
+	deleted:    cr/io/8
+	deleted:    cr/io/9
+	modified:   gemini-hints-debug.log
+	modified:   packages/cli/src/ui/components/InputPrompt.tsx
 
-src/ui/components/LoadingIndicator.tsx(55,37): error TS2339: Property 'warning' does not exist on type '{ primary: string; secondary: string; link: string; accent: string; response: string; }'.
-Error: Command failed: tsc --build
-    at genericNodeError (node:internal/errors:998:15)
-    at wrappedFn (node:internal/errors:543:14)
-    at checkExecSyncError (node:child_process:925:11)
-    at execSync (node:child_process:997:15)
-    at file:///Users/bill/projects/gemini-cli/scripts/build_package.js:30:1
-    at ModuleJob.run (node:internal/modules/esm/module_job:377:25)
-    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:671:26)
-    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
-  status: 2,
-  signal: null,
-  output: [ null, null, null ],
-  pid: 49119,
-  stdout: null,
-  stderr: null
-}
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	cr/conversations/pause-unpause-implementation-clean-slate-and-rebuild.md
+	cr/io/1
+	cr/io/2
+	cr/io/3
+	cr/io/4
+	cr/logs/
 
-Node.js v25.1.0
-npm error Lifecycle script `build` failed with error:
-npm error code 1
-npm error path /Users/bill/projects/gemini-cli/packages/cli
-npm error workspace @google/gemini-cli@0.21.0-nightly.20251209.ec9a8c7a7
-npm error location /Users/bill/projects/gemini-cli/packages/cli
-npm error command failed
-npm error command sh -c node ../../scripts/build_package.js

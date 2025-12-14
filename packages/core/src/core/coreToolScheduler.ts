@@ -375,6 +375,7 @@ export class CoreToolScheduler {
   private isFinalizingToolCalls = false;
   private isScheduling = false;
   private isCancelling = false;
+  private isPaused = false;
   private requestQueue: Array<{
     request: ToolCallRequestInfo | ToolCallRequestInfo[];
     signal: AbortSignal;
@@ -763,6 +764,21 @@ export class CoreToolScheduler {
     void this.checkAndNotifyCompletion(signal);
   }
 
+  /**
+   * Pause or resume tool execution.
+   * When paused, scheduled tools will not start executing until unpaused.
+   * @param paused - true to pause, false to resume
+   */
+  setPaused(paused: boolean): void {
+    this.isPaused = paused;
+    // If unpausing, trigger execution attempt for any scheduled tools
+    if (!paused) {
+      // Create a dummy signal that won't abort
+      const signal = new AbortController().signal;
+      void this.attemptExecutionOfScheduledCalls(signal);
+    }
+  }
+
   private async _schedule(
     request: ToolCallRequestInfo | ToolCallRequestInfo[],
     signal: AbortSignal,
@@ -1111,6 +1127,11 @@ export class CoreToolScheduler {
   private async attemptExecutionOfScheduledCalls(
     signal: AbortSignal,
   ): Promise<void> {
+    // Don't execute tools while paused
+    if (this.isPaused) {
+      return;
+    }
+
     const allCallsFinalOrScheduled = this.toolCalls.every(
       (call) =>
         call.status === 'scheduled' ||
