@@ -120,6 +120,7 @@ export const useGeminiStream = (
   const [isResponding, setIsResponding] = useState<boolean>(false);
   const [thought, setThought] = useState<ThoughtSummary | null>(null);
   const thoughtAccumulatorRef = useRef<ThoughtSummary[]>([]); // Accumulate thoughts for summarization
+  const thinkingHistoryRef = useRef<string>(''); // Keep history of thinking for the current tool chain
   const [pendingHistoryItem, pendingHistoryItemRef, setPendingHistoryItem] =
     useStateAndRef<HistoryItemWithoutId | null>(null);
   const processedMemoryToolsRef = useRef<Set<string>>(new Set());
@@ -877,19 +878,30 @@ export const useGeminiStream = (
 
         try {
           const thoughtsText = thoughts
-            .map((t, i) => `${i + 1}. ${t.subject}: ${t.description}`)
-            .join('\n');
+            .map((t) => `**${t.subject}**\n${t.description}`)
+            .join('\n\n');
 
-          const prompt = `Summarize these AI thoughts for an expert developer.
-Strip filler, focus on WHY not HOW, merge redundant info, one sentence max.
+          // Construct prompt with history
+          const historyContext = thinkingHistoryRef.current
+            ? `Previous thinking history:\n${thinkingHistoryRef.current}\n\n`
+            : '';
+
+          const prompt = `${historyContext}Summarize this internal reasoning concisely. Include specific details like filenames, hypotheses, or next steps. Start directly with the substance - don't introduce or explain that you're summarizing:
 
 ${thoughtsText}
 
-Return JSON: {"subject": "short summary", "description": "one sentence"}`;
+Return ONLY valid JSON with this exact format:
+{"subject": "short summary (max 50 chars)", "description": "one sentence summary"}`;
+
+          const systemInstruction = `You are the AI's internal monologue. Write in first person using 'I' statements. Go directly into your reasoning without preambles like 'Here's what I'm thinking' or 'Let me explain'. Just start with your actual thoughts about what you're investigating, what you discovered, and what you're doing next.`;
 
           const result = await config.getBaseLlmClient().generateContent({
             modelConfigKey: { model: 'gemini-2.0-flash-exp' },
             contents: [{ role: 'user', parts: [{ text: prompt }] }],
+            systemInstruction: {
+              role: 'system',
+              parts: [{ text: systemInstruction }],
+            },
             abortSignal: signal,
             promptId: 'thought-summarization',
           });
@@ -903,6 +915,9 @@ Return JSON: {"subject": "short summary", "description": "one sentence"}`;
                 subject: parsed.subject || thoughts[0].subject,
                 description: parsed.description || thoughts[0].description,
               };
+
+              // Update history with new thinking and summary
+              thinkingHistoryRef.current += `\n\nThinking:\n${thoughtsText}\n\nSummary:\n${summarized.description}`;
 
               // Update loading indicator with summarized subject
               setThought(summarized);
@@ -1030,6 +1045,7 @@ Return JSON: {"subject": "short summary", "description": "one sentence"}`;
               startNewPrompt();
               setThought(null); // Reset thought when starting a new prompt
               thoughtAccumulatorRef.current = []; // Clear thought accumulator for new turn
+              thinkingHistoryRef.current = ''; // Reset thinking history for new turn
             }
 
             setIsResponding(true);
