@@ -170,41 +170,33 @@ pkg/
 4. **Context Management**: Gemini has checkpointing, CodeRhapsody has
    compression
 
-## Implementation Strategy
+## Implementation Strategy (Revised for PoC)
 
-### Phase 1: Foundation (Week 1-2)
+### Phase 1: Real-time Hints (✅ Completed)
 
-1. **Shell Command Enhancements** - Immediate developer value
-   - Add callback patterns to `run_command`
-   - Implement `send_input` improvements
-   - Pattern detection for interactive tools
+- **Goal**: Allow user to guide Gemini while it's working.
+- **Status**: Merged to `main`.
+- **Details**: Single-queue architecture. Messages typed during tool execution
+  are injected as hints before tool responses.
 
-2. **Testing Philosophy Documentation** - Quality foundation
-   - Document fake-based testing approach
-   - Create examples for Gemini CLI codebase
-   - Add to CONTRIBUTING.md
+### Phase 2: Thinking Summarization (✅ Completed)
 
-### Phase 2: Core Features (Week 2-3)
+- **Goal**: Compress verbose "thinking" into concise 1-sentence summaries.
+- **Status**: Merged to `main`.
+- **Details**: Accumulates thoughts, uses Flash to summarize, displays in
+  loading indicator and chat history.
 
-3. **Context Compression** - Session length multiplier
-   - Design compression system for Gemini CLI
-   - Implement tool output summarization
-   - Add intelligent section archival
+### Phase 3: TTS Integration (✅ Completed)
 
-4. **Multi-Provider Support** - Flexibility
-   - Abstract AI client interface
-   - Add Anthropic SDK integration
-   - Implement provider switching UI
+- **Goal**: Speak output at 750 WPM.
+- **Status**: Merged to `main`.
+- **Details**: Integrated `say` library. Speaks thinking summaries and final
+  chat responses. Excludes tool outputs. Stops on cancel.
 
-### Phase 3: Polish (Week 3-4)
+## 4. Next Steps
 
-5. **Screenshot System** - Visual capabilities
-6. **Web Crawling Enhancements** - Research power
-7. **Secret Management** - Security + automation
-
-### Phase 4: Advanced (If Time Allows)
-
-8. Image uploads, TTS, cost tracking, advanced caching
+- All planned features for the PoC are complete and integrated into `main`.
+- Ready for demo/usage.
 
 ## Success Metrics
 
