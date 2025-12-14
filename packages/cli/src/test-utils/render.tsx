@@ -171,6 +171,8 @@ const mockUIActions: UIActions = {
   handleApiKeyCancel: vi.fn(),
   setBannerVisible: vi.fn(),
   setEmbeddedShellFocused: vi.fn(),
+  setPaused: vi.fn(),
+  togglePause: vi.fn(),
 };
 
 export const renderWithProviders = (
