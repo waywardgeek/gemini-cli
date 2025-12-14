@@ -80,7 +80,6 @@ describe('keyMatchers', () => {
     [Command.EXPAND_SUGGESTION]: (key: Key) => key.name === 'right',
     [Command.COLLAPSE_SUGGESTION]: (key: Key) => key.name === 'left',
     [Command.STOP_TTS]: (key: Key) => key.ctrl && key.name === 'space',
-    [Command.TOGGLE_PAUSE]: (key: Key) => key.name === 'space',
   };
 
   // Test data for each command with positive and negative test cases
@@ -342,11 +341,6 @@ describe('keyMatchers', () => {
       command: Command.STOP_TTS,
       positive: [createKey('space', { ctrl: true })],
       negative: [createKey('space'), createKey('s', { ctrl: true })],
-    },
-    {
-      command: Command.TOGGLE_PAUSE,
-      positive: [createKey('space')],
-      negative: [createKey('space', { ctrl: true }), createKey('p')],
     },
   ];
 

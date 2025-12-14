@@ -259,16 +259,7 @@ export const useGeminiStream = (
     prevActiveShellPtyIdRef.current = activeShellPtyId;
   }, [activeShellPtyId, addItem]);
 
-  const [isPaused, setIsPaused] = useState(false);
-
-  const togglePause = useCallback(() => {
-    setIsPaused((prev) => !prev);
-  }, []);
-
   const streamingState = useMemo(() => {
-    if (isPaused) {
-      return StreamingState.Paused;
-    }
     if (toolCalls.some((tc) => tc.status === 'awaiting_approval')) {
       return StreamingState.WaitingForConfirmation;
     }
@@ -820,16 +811,6 @@ export const useGeminiStream = (
       let fullResponseText = '';
       const toolCallRequests: ToolCallRequestInfo[] = [];
       for await (const event of stream) {
-        if (isPaused) {
-          await new Promise<void>((resolve) => {
-            const interval = setInterval(() => {
-              if (!isPaused) {
-                clearInterval(interval);
-                resolve();
-              }
-            }, 100);
-          });
-        }
         switch (event.type) {
           case ServerGeminiEventType.Thought:
             // Accumulate thoughts for later summarization
@@ -1468,7 +1449,5 @@ Return ONLY valid JSON with this exact format:
     activePtyId,
     loopDetectionConfirmationRequest,
     lastOutputTime,
-    togglePause,
-    setIsPaused,
   };
 };

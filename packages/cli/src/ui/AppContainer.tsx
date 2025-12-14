@@ -758,8 +758,6 @@ Logging in with Google... Restarting Gemini CLI to continue.
     activePtyId,
     loopDetectionConfirmationRequest,
     lastOutputTime,
-    togglePause,
-    setIsPaused,
   } = useGeminiStream(
     config.getGeminiClient(),
     historyManager.history,
@@ -1251,8 +1249,6 @@ Logging in with Google... Restarting Gemini CLI to continue.
         }
       } else if (keyMatchers[Command.STOP_TTS](key)) {
         ttsService.stop();
-      } else if (keyMatchers[Command.TOGGLE_PAUSE](key)) {
-        togglePause();
       }
     },
     [
@@ -1493,7 +1489,6 @@ Logging in with Google... Restarting Gemini CLI to continue.
       loopDetectionConfirmationRequest,
       geminiMdFileCount,
       streamingState,
-      isPaused: streamingState === StreamingState.Paused,
       initError,
       pendingGeminiHistoryItems,
       thought,
@@ -1647,7 +1642,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
       bannerData,
       bannerVisible,
       config,
-      togglePause,
+    ],
     ],
   );
 
@@ -1691,8 +1686,6 @@ Logging in with Google... Restarting Gemini CLI to continue.
       handleApiKeyCancel,
       setBannerVisible,
       setEmbeddedShellFocused,
-      setPaused: setIsPaused,
-      togglePause,
     }),
     [
       handleThemeSelect,
@@ -1728,7 +1721,6 @@ Logging in with Google... Restarting Gemini CLI to continue.
       handleApiKeyCancel,
       setBannerVisible,
       setEmbeddedShellFocused,
-      setIsPaused,
     ],
   );
 
