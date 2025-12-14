@@ -75,6 +75,9 @@ export enum Command {
   // Suggestion expansion
   EXPAND_SUGGESTION = 'expandSuggestion',
   COLLAPSE_SUGGESTION = 'collapseSuggestion',
+
+  // TTS Control
+  STOP_TTS = 'stopTts',
 }
 
 /**
@@ -217,6 +220,9 @@ export const defaultKeyBindings: KeyBindingConfig = {
   // Suggestion expansion
   [Command.EXPAND_SUGGESTION]: [{ key: 'right' }],
   [Command.COLLAPSE_SUGGESTION]: [{ key: 'left' }],
+
+  // TTS Control
+  [Command.STOP_TTS]: [{ key: 'space', ctrl: true }],
 };
 
 interface CommandCategory {
@@ -313,6 +319,10 @@ export const commandCategories: readonly CommandCategory[] = [
     title: 'Session Control',
     commands: [Command.QUIT, Command.EXIT],
   },
+  {
+    title: 'Accessibility',
+    commands: [Command.STOP_TTS],
+  },
 ];
 
 /**
@@ -366,4 +376,5 @@ export const commandDescriptions: Readonly<Record<Command, string>> = {
     'Toggle focus between the shell and Gemini input.',
   [Command.EXPAND_SUGGESTION]: 'Expand an inline suggestion.',
   [Command.COLLAPSE_SUGGESTION]: 'Collapse an inline suggestion.',
+  [Command.STOP_TTS]: 'Stop the current text-to-speech output.',
 };

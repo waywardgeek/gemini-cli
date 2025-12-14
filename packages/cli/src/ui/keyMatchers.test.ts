@@ -79,6 +79,7 @@ describe('keyMatchers', () => {
       key.ctrl && key.name === 'f',
     [Command.EXPAND_SUGGESTION]: (key: Key) => key.name === 'right',
     [Command.COLLAPSE_SUGGESTION]: (key: Key) => key.name === 'left',
+    [Command.STOP_TTS]: (key: Key) => key.ctrl && key.name === 'space',
   };
 
   // Test data for each command with positive and negative test cases
@@ -335,6 +336,11 @@ describe('keyMatchers', () => {
       command: Command.TOGGLE_SHELL_INPUT_FOCUS,
       positive: [createKey('f', { ctrl: true })],
       negative: [createKey('f')],
+    },
+    {
+      command: Command.STOP_TTS,
+      positive: [createKey('space', { ctrl: true })],
+      negative: [createKey('space'), createKey('s', { ctrl: true })],
     },
   ];
 

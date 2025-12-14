@@ -1247,6 +1247,8 @@ Logging in with Google... Restarting Gemini CLI to continue.
         if (activePtyId || embeddedShellFocused) {
           setEmbeddedShellFocused((prev) => !prev);
         }
+      } else if (keyMatchers[Command.STOP_TTS](key)) {
+        ttsService.stop();
       }
     },
     [
