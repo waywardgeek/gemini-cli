@@ -1469,5 +1469,6 @@ Return ONLY valid JSON with this exact format:
     loopDetectionConfirmationRequest,
     lastOutputTime,
     togglePause,
+    setIsPaused,
   };
 };
