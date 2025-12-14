@@ -214,6 +214,9 @@ export interface SummarizeToolOutputSettings {
 export interface AccessibilitySettings {
   disableLoadingPhrases?: boolean;
   screenReader?: boolean;
+  ttsEnabled?: boolean;
+  ttsSpeed?: number;
+  ttsVoice?: string;
 }
 
 export interface SessionRetentionSettings {
