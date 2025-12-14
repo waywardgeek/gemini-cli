@@ -41,6 +41,7 @@ import {
   getResponseText,
 } from '@google/gemini-cli-core';
 import { type Part, type PartListUnion, FinishReason } from '@google/genai';
+import { ttsService } from '../../services/ttsService.js';
 import type {
   HistoryItem,
   HistoryItemWithoutId,
@@ -324,6 +325,9 @@ export const useGeminiStream = (
     abortControllerRef.current.abort();
     // 2. Call the imperative cancel to clear the queue of pending tools.
     cancelAllToolCalls(abortControllerRef.current.signal);
+
+    // Stop any ongoing TTS
+    ttsService.stop();
 
     if (pendingHistoryItemRef.current) {
       const isShellCommand =
@@ -615,6 +619,7 @@ export const useGeminiStream = (
       );
       setIsResponding(false);
       setThought(null); // Reset thought when user cancels
+      ttsService.stop(); // Stop TTS
     },
     [addItem, pendingHistoryItemRef, setPendingHistoryItem, setThought],
   );
@@ -797,6 +802,7 @@ export const useGeminiStream = (
       signal: AbortSignal,
     ): Promise<StreamProcessingStatus> => {
       let geminiMessageBuffer = '';
+      let fullResponseText = '';
       const toolCallRequests: ToolCallRequestInfo[] = [];
       for await (const event of stream) {
         switch (event.type) {
@@ -805,6 +811,7 @@ export const useGeminiStream = (
             thoughtAccumulatorRef.current.push(event.value);
             break;
           case ServerGeminiEventType.Content:
+            fullResponseText += event.value;
             geminiMessageBuffer = handleContentEvent(
               event.value,
               geminiMessageBuffer,
@@ -919,6 +926,9 @@ Return ONLY valid JSON with this exact format:
               // Update loading indicator with summarized subject
               setThought(summarized);
 
+              // Speak the thinking summary
+              ttsService.speak(`Thinking: ${summarized.description}`);
+
               // Prepend full summary to Gemini's response text in chat
               const summaryText = `**Thinking:** ${summarized.description}\n\n`;
               setPendingHistoryItem((item) => {
@@ -956,6 +966,11 @@ Return ONLY valid JSON with this exact format:
           }
         }
         thoughtAccumulatorRef.current = [];
+      }
+
+      // Speak the accumulated response text
+      if (fullResponseText.trim()) {
+        ttsService.speak(fullResponseText);
       }
 
       if (toolCallRequests.length > 0) {

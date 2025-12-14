@@ -103,6 +103,7 @@ import { type IdeIntegrationNudgeResult } from './IdeIntegrationNudge.js';
 import { appEvents, AppEvent } from '../utils/events.js';
 import { type UpdateObject } from './utils/updateCheck.js';
 import { setUpdateHandler } from '../utils/handleAutoUpdate.js';
+import { ttsService } from '../services/ttsService.js';
 import { registerCleanup, runExitCleanup } from '../utils/cleanup.js';
 import { RELAUNCH_EXIT_CODE } from '../utils/processUtils.js';
 import type { SessionInfo } from '../utils/sessionUtils.js';
@@ -1453,6 +1454,16 @@ Logging in with Google... Restarting Gemini CLI to continue.
       isMounted = false;
     };
   }, [config, refreshStatic]);
+
+  // Update TTS config
+  useEffect(() => {
+    const accessibility = config.getAccessibility();
+    ttsService.updateConfig({
+      enabled: accessibility.ttsEnabled ?? false,
+      speed: accessibility.ttsSpeed ?? 1.0,
+      voice: accessibility.ttsVoice,
+    });
+  }, [config]);
 
   const uiState: UIState = useMemo(
     () => ({
