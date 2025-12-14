@@ -78,6 +78,7 @@ export enum Command {
 
   // TTS Control
   STOP_TTS = 'stopTts',
+  TOGGLE_PAUSE = 'togglePause',
 }
 
 /**
@@ -223,6 +224,7 @@ export const defaultKeyBindings: KeyBindingConfig = {
 
   // TTS Control
   [Command.STOP_TTS]: [{ key: 'space', ctrl: true }],
+  [Command.TOGGLE_PAUSE]: [{ key: 'space' }],
 };
 
 interface CommandCategory {
@@ -321,7 +323,7 @@ export const commandCategories: readonly CommandCategory[] = [
   },
   {
     title: 'Accessibility',
-    commands: [Command.STOP_TTS],
+    commands: [Command.STOP_TTS, Command.TOGGLE_PAUSE],
   },
 ];
 
@@ -377,4 +379,5 @@ export const commandDescriptions: Readonly<Record<Command, string>> = {
   [Command.EXPAND_SUGGESTION]: 'Expand an inline suggestion.',
   [Command.COLLAPSE_SUGGESTION]: 'Collapse an inline suggestion.',
   [Command.STOP_TTS]: 'Stop the current text-to-speech output.',
+  [Command.TOGGLE_PAUSE]: 'Pause or unpause the response.',
 };

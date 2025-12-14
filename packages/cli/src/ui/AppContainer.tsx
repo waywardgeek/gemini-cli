@@ -758,6 +758,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
     activePtyId,
     loopDetectionConfirmationRequest,
     lastOutputTime,
+    togglePause,
   } = useGeminiStream(
     config.getGeminiClient(),
     historyManager.history,
@@ -1249,6 +1250,8 @@ Logging in with Google... Restarting Gemini CLI to continue.
         }
       } else if (keyMatchers[Command.STOP_TTS](key)) {
         ttsService.stop();
+      } else if (keyMatchers[Command.TOGGLE_PAUSE](key)) {
+        togglePause();
       }
     },
     [
@@ -1685,6 +1688,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
       handleApiKeyCancel,
       setBannerVisible,
       setEmbeddedShellFocused,
+      togglePause,
     }),
     [
       handleThemeSelect,
