@@ -101,6 +101,9 @@ import { ApprovalMode } from '../policy/types.js';
 export interface AccessibilitySettings {
   disableLoadingPhrases?: boolean;
   screenReader?: boolean;
+  ttsEnabled?: boolean;
+  ttsSpeed?: number;
+  ttsVoice?: string;
 }
 
 export interface BugCommandSettings {
