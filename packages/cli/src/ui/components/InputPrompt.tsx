@@ -455,7 +455,6 @@ export const InputPrompt: React.FC<InputPromptProps> = ({
         } else if (key.name === 'space' && buffer.text === '') {
           // Space when empty - unpause (only when truly empty, not just whitespace)
           setIsPaused(false);
-          return; // Don't add the space
         }
       }
 
