@@ -1348,6 +1348,13 @@ Return ONLY valid JSON with this exact format:
           );
           // Add queued messages as user messages to history before tool responses
           // This injects them mid-turn, allowing them to influence the model's next response
+          addItem(
+            {
+              type: MessageType.USER,
+              text: queuedMessages,
+            },
+            Date.now(),
+          );
           await geminiClient.addHistory({
             role: 'user',
             parts: [{ text: queuedMessages }],

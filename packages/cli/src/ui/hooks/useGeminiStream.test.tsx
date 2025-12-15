@@ -966,7 +966,7 @@ describe('useGeminiStream', () => {
 
     it('should cancel an in-progress stream when escape is pressed', async () => {
       const mockStream = (async function* () {
-        yield { type: 'content', value: 'Part 1' };
+        yield { type: ServerGeminiEventType.Content, value: 'Part 1' };
         // Keep the stream open
         await new Promise(() => {});
       })();
@@ -976,8 +976,8 @@ describe('useGeminiStream', () => {
 
       // Start a query
       await act(async () => {
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        result.current.submitQuery('test query');
+         
+        await result.current.submitQuery('test query');
       });
 
       // Wait for the first part of the response
@@ -1006,7 +1006,7 @@ describe('useGeminiStream', () => {
     it('should call onCancelSubmit handler when escape is pressed', async () => {
       const cancelSubmitSpy = vi.fn();
       const mockStream = (async function* () {
-        yield { type: 'content', value: 'Part 1' };
+        yield { type: ServerGeminiEventType.Content, value: 'Part 1' };
         // Keep the stream open
         await new Promise(() => {});
       })();
@@ -1036,8 +1036,8 @@ describe('useGeminiStream', () => {
 
       // Start a query
       await act(async () => {
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        result.current.submitQuery('test query');
+         
+        await result.current.submitQuery('test query');
       });
 
       simulateEscapeKeyPress();
@@ -1048,7 +1048,7 @@ describe('useGeminiStream', () => {
     it('should call setShellInputFocused(false) when escape is pressed', async () => {
       const setShellInputFocusedSpy = vi.fn();
       const mockStream = (async function* () {
-        yield { type: 'content', value: 'Part 1' };
+        yield { type: ServerGeminiEventType.Content, value: 'Part 1' };
         await new Promise(() => {}); // Keep stream open
       })();
       mockSendMessageStream.mockReturnValue(mockStream);
@@ -1077,8 +1077,8 @@ describe('useGeminiStream', () => {
 
       // Start a query
       await act(async () => {
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        result.current.submitQuery('test query');
+         
+        await result.current.submitQuery('test query');
       });
 
       simulateEscapeKeyPress();
@@ -1110,17 +1110,17 @@ describe('useGeminiStream', () => {
       });
 
       const mockStream = (async function* () {
-        yield { type: 'content', value: 'Initial' };
+        yield { type: ServerGeminiEventType.Content, value: 'Initial' };
         await streamPromise; // Wait until we manually continue
-        yield { type: 'content', value: ' Canceled' };
+        yield { type: ServerGeminiEventType.Content, value: ' Canceled' };
       })();
       mockSendMessageStream.mockReturnValue(mockStream);
 
       const { result } = renderTestHook();
 
       await act(async () => {
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        result.current.submitQuery('long running query');
+         
+        await result.current.submitQuery('long running query');
       });
 
       await waitFor(() => {
