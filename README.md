@@ -3,8 +3,45 @@
 [![Gemini CLI CI](https://github.com/google-gemini/gemini-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/google-gemini/gemini-cli/actions/workflows/ci.yml)
 [![Gemini CLI E2E (Chained)](https://github.com/google-gemini/gemini-cli/actions/workflows/chained_e2e.yml/badge.svg)](https://github.com/google-gemini/gemini-cli/actions/workflows/chained_e2e.yml)
 [![Version](https://img.shields.io/npm/v/@google/gemini-cli)](https://www.npmjs.com/package/@google/gemini-cli)
-[![License](https://img.shields.io/github/license/google-gemini/gemini-cli)](https://github.com/google-gemini/gemini-cli/blob/main/LICENSE)
-[![View Code Wiki](https://www.gstatic.com/_/boq-sdlc-agents-ui/_/r/YUi5dj2UWvE.svg)](https://codewiki.google/github.com/google-gemini/gemini-cli)
+[![License](httpss://img.shields.io/github/license/google-gemini/gemini-cli)](httpss://github.com/google-gemini/gemini-cli/blob/main/LICENSE)
+[![View Code Wiki](httpss://www.gstatic.com/_/boq-sdlc-agents-ui/_/r/YUi5dj2UWvE.svg)](httpss://codewiki.google/github.com/google-gemini/gemini-cli)
+
+## 🤝 Real-time Human-AI Collaboration
+
+Gemini CLI introduces a suite of features designed for seamless, real-time
+collaboration between you and the AI. This allows for a "pair-programming"
+experience where you can guide, correct, and understand the AI's actions as they
+happen.
+
+- **🧠 Real-time Hints**: Guide the AI's thinking and tool use without
+  interrupting its flow.
+  [[Issue: Add ability to provide real-time hints to guide the AI as it works without breaking its chain of reasoning]](https://github.com/google-gemini/gemini-cli/issues?q=is%3Aissue%20state%3Aopen%20hints#:~:text=waywardgeek%20opened%20yesterday-,Add%20ability%20to%20provide%20real%2Dtime%20hints%20to%20guide%20the%20AI%20as%20it%20works%20without%20breaking%20its%20chain%20of%20reasoning,-area/core)
+- **⏸️ Pause/Resume**: Pause the AI at any point, inspect the current state, and
+  resume when you're ready.
+  [[Issue: Pause tool calls while I read Gemini's thinking anc chat]](https://github.com/google-gemini/gemini-cli/issues/15055)
+- **🗣️ Text-to-Speech (TTS)**: Listen to the AI's thought process in real-time.
+  [[Issue: TTS output of just chat and thinking summaries]](https://github.com/google-gemini/gemini-cli/issues/15054)
+- **💡 Streamlined Thinking Display**: A clear, concise view of the AI's
+  reasoning and actions.
+  [[Issue: Summarize Gemini 3.0 Pro's thinking]](https://github.com/google-gemini/gemini-cli/issues/15052)
+
+These features work together to keep you in control and ensure you remain the
+expert on your codebase. Learn more in our
+[Human-AI Collaboration Guide](./human_ai_collaboration.md).
+
+### Why This Collaboration Leads to a 2X Productivity Boost
+
+This collaborative approach significantly boosts productivity by:
+
+1.  **Preventing Errors On-the-Fly**: Real-time monitoring via TTS and
+    streamlined thinking allows for immediate course correction with hints,
+    preventing the AI from performing incorrect work and saving valuable
+    debugging time.
+2.  **Fostering Developer Expertise**: By actively guiding the AI and
+    understanding its reasoning, you remain the primary expert on your codebase,
+    gaining deeper insights into architectural decisions and implementation
+    details. This ensures that the human in the loop retains and builds upon
+    their expertise when building complex systems.
 
 ![Gemini CLI Screenshot](./docs/assets/gemini-screenshot.png)
 
