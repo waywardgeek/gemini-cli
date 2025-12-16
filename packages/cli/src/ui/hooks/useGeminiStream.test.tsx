@@ -36,6 +36,14 @@ import {
   debugLogger,
 } from '@google/gemini-cli-core';
 import type { Part, PartListUnion } from '@google/genai';
+
+vi.mock('../../services/ttsService.js', () => ({
+  ttsService: {
+    speak: vi.fn(),
+    stop: vi.fn(),
+  },
+}));
+import { ttsService } from '../../services/ttsService.js';
 import type { UseHistoryManagerReturn } from './useHistoryManager.js';
 import type { SlashCommandProcessorResult } from '../types.js';
 import { MessageType, StreamingState } from '../types.js';
@@ -965,18 +973,19 @@ describe('useGeminiStream', () => {
     };
 
     it('should cancel an in-progress stream when escape is pressed', async () => {
-      const mockStream = (async function* () {
-        yield { type: ServerGeminiEventType.Content, value: 'Part 1' };
-        // Keep the stream open
-        await new Promise(() => {});
-      })();
-      mockSendMessageStream.mockReturnValue(mockStream);
+      mockSendMessageStream.mockImplementation((_query, signal) => (async function* () {
+          yield { type: ServerGeminiEventType.Content, value: 'Part 1' };
+          // Keep the stream open until aborted
+          await new Promise<void>((resolve) => {
+            if (signal.aborted) return resolve();
+            signal.addEventListener('abort', () => resolve());
+          });
+        })());
 
       const { result } = renderTestHook();
 
       // Start a query
       await act(async () => {
-         
         await result.current.submitQuery('test query');
       });
 
@@ -1005,12 +1014,14 @@ describe('useGeminiStream', () => {
 
     it('should call onCancelSubmit handler when escape is pressed', async () => {
       const cancelSubmitSpy = vi.fn();
-      const mockStream = (async function* () {
-        yield { type: ServerGeminiEventType.Content, value: 'Part 1' };
-        // Keep the stream open
-        await new Promise(() => {});
-      })();
-      mockSendMessageStream.mockReturnValue(mockStream);
+      mockSendMessageStream.mockImplementation((_query, signal) => (async function* () {
+          yield { type: ServerGeminiEventType.Content, value: 'Part 1' };
+          // Keep the stream open until aborted
+          await new Promise<void>((resolve) => {
+            if (signal.aborted) return resolve();
+            signal.addEventListener('abort', () => resolve());
+          });
+        })());
 
       const { result } = renderHook(() =>
         useGeminiStream(
@@ -1036,7 +1047,6 @@ describe('useGeminiStream', () => {
 
       // Start a query
       await act(async () => {
-         
         await result.current.submitQuery('test query');
       });
 
@@ -1047,11 +1057,14 @@ describe('useGeminiStream', () => {
 
     it('should call setShellInputFocused(false) when escape is pressed', async () => {
       const setShellInputFocusedSpy = vi.fn();
-      const mockStream = (async function* () {
-        yield { type: ServerGeminiEventType.Content, value: 'Part 1' };
-        await new Promise(() => {}); // Keep stream open
-      })();
-      mockSendMessageStream.mockReturnValue(mockStream);
+      mockSendMessageStream.mockImplementation((_query, signal) => (async function* () {
+          yield { type: ServerGeminiEventType.Content, value: 'Part 1' };
+          // Keep the stream open until aborted
+          await new Promise<void>((resolve) => {
+            if (signal.aborted) return resolve();
+            signal.addEventListener('abort', () => resolve());
+          });
+        })());
 
       const { result } = renderHook(() =>
         useGeminiStream(
@@ -1077,7 +1090,6 @@ describe('useGeminiStream', () => {
 
       // Start a query
       await act(async () => {
-         
         await result.current.submitQuery('test query');
       });
 
@@ -1109,17 +1121,16 @@ describe('useGeminiStream', () => {
         continueStream = resolve;
       });
 
-      const mockStream = (async function* () {
-        yield { type: ServerGeminiEventType.Content, value: 'Initial' };
-        await streamPromise; // Wait until we manually continue
-        yield { type: ServerGeminiEventType.Content, value: ' Canceled' };
-      })();
-      mockSendMessageStream.mockReturnValue(mockStream);
+      mockSendMessageStream.mockImplementation((_query, signal) => (async function* () {
+          yield { type: ServerGeminiEventType.Content, value: 'Initial' };
+          await streamPromise; // Wait until we manually continue
+          if (signal.aborted) return; // Exit if aborted
+          yield { type: ServerGeminiEventType.Content, value: ' Canceled' };
+        })());
 
       const { result } = renderTestHook();
 
       await act(async () => {
-         
         await result.current.submitQuery('long running query');
       });
 
@@ -1555,6 +1566,41 @@ describe('useGeminiStream', () => {
           'gemini-2.5-flash',
         );
       });
+    });
+
+    it('should call ttsService.speak with the formatted error message on API error', async () => {
+      // 1. Setup
+      const mockError = new Error('A serious error occurred');
+      const formattedErrorMessage =
+        'Formatted API Error: A serious error occurred';
+      mockParseAndFormatApiError.mockReturnValue(formattedErrorMessage);
+
+      const ttsSpeakSpy = vi
+        .spyOn(ttsService, 'speak')
+        .mockImplementation(() => {});
+
+      mockSendMessageStream.mockReturnValue(
+        (async function* () {
+          yield {
+            type: ServerGeminiEventType.Error,
+            value: { error: mockError },
+          };
+        })(),
+      );
+
+      const { result } = renderHookWithDefaults();
+
+      // 2. Action
+      await act(async () => {
+        await result.current.submitQuery('trigger error');
+      });
+
+      // 3. Assertion
+      await waitFor(() => {
+        expect(ttsSpeakSpy).toHaveBeenCalledWith(formattedErrorMessage);
+      });
+
+      ttsSpeakSpy.mockRestore();
     });
   });
 

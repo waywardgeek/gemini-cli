@@ -649,19 +649,21 @@ export const useGeminiStream = (
         addItem(pendingHistoryItemRef.current, userMessageTimestamp);
         setPendingHistoryItem(null);
       }
+      const errorMessage = parseAndFormatApiError(
+        eventValue.error,
+        config.getContentGeneratorConfig()?.authType,
+        undefined,
+        config.getModel(),
+        DEFAULT_GEMINI_FLASH_MODEL,
+      );
       addItem(
         {
           type: MessageType.ERROR,
-          text: parseAndFormatApiError(
-            eventValue.error,
-            config.getContentGeneratorConfig()?.authType,
-            undefined,
-            config.getModel(),
-            DEFAULT_GEMINI_FLASH_MODEL,
-          ),
+          text: errorMessage,
         },
         userMessageTimestamp,
       );
+      ttsService.speak(errorMessage);
       setThought(null); // Reset thought when there's an error
     },
     [addItem, pendingHistoryItemRef, setPendingHistoryItem, config, setThought],
