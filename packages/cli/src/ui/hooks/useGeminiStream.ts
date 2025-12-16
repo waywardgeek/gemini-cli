@@ -317,6 +317,9 @@ export const useGeminiStream = (
   }, [streamingState, config, history]);
 
   const cancelOngoingRequest = useCallback(() => {
+    // Always stop TTS when escape is pressed, regardless of streaming state
+    ttsService.stop();
+
     if (
       streamingState !== StreamingState.Responding &&
       streamingState !== StreamingState.WaitingForConfirmation
@@ -344,9 +347,6 @@ export const useGeminiStream = (
     abortControllerRef.current.abort();
     // 2. Call the imperative cancel to clear the queue of pending tools.
     cancelAllToolCalls(abortControllerRef.current.signal);
-
-    // Stop any ongoing TTS
-    ttsService.stop();
 
     if (pendingHistoryItemRef.current) {
       const isShellCommand =
@@ -418,9 +418,7 @@ export const useGeminiStream = (
       }
     },
     {
-      isActive:
-        streamingState === StreamingState.Responding ||
-        streamingState === StreamingState.WaitingForConfirmation,
+      isActive: true,
     },
   );
 
