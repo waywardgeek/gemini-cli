@@ -15,7 +15,7 @@ happen.
 
 - **🧠 Real-time Hints**: Guide the AI's thinking and tool use without
   interrupting its flow.
-  [[Issue: Add ability to provide real-time hints to guide the AI as it works without breaking its chain of reasoning]](https://github.com/google-gemini/gemini-cli/issues?q=is%3Aissue%20state%3Aopen%20hints#:~:text=waywardgeek%20opened%20yesterday-,Add%20ability%20to%20provide%20real%2Dtime%20hints%20to%20guide%20the%20AI%20as%20it%20works%20without%20breaking%20its%20chain%20of%20reasoning,-area/core)
+  [[Issue: Add ability to provide real-time hints to guide the AI as it works without breaking its chain of reasoning]](https://github.com/google-gemini/gemini-cli/issues/14390)
 - **⏸️ Pause/Resume**: Pause the AI at any point, inspect the current state, and
   resume when you're ready.
   [[Issue: Pause tool calls while I read Gemini's thinking anc chat]](https://github.com/google-gemini/gemini-cli/issues/15055)
