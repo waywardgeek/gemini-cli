@@ -1648,7 +1648,6 @@ Logging in with Google... Restarting Gemini CLI to continue.
       bannerVisible,
       config,
     ],
-    ],
   );
 
   const exitPrivacyNotice = useCallback(
