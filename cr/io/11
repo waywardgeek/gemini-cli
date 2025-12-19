@@ -1,3 +1,0 @@
-25e57ee8e Add pause/unpause feature for tool execution
-858b0fd6e fix: cleanup remaining pause references after revert
-bd03f8dba Revert pause/unpause implementation - state desync issues
