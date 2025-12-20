@@ -266,6 +266,18 @@ their corresponding top-level category object in your `settings.json` file.
   - **Default:** `false`
   - **Requires restart:** Yes
 
+- **`ui.accessibility.ttsEnabled`** (boolean):
+  - **Description:** Enable Text-to-Speech (TTS) output.
+  - **Default:** `false`
+
+- **`ui.accessibility.ttsSpeed`** (number):
+  - **Description:** Speed of TTS output (1.0 is normal).
+  - **Default:** `1`
+
+- **`ui.accessibility.ttsVoice`** (string):
+  - **Description:** Voice to use for TTS output.
+  - **Default:** `undefined`
+
 #### `ide`
 
 - **`ide.enabled`** (boolean):
@@ -309,6 +321,11 @@ their corresponding top-level category object in your `settings.json` file.
 
 - **`model.skipNextSpeakerCheck`** (boolean):
   - **Description:** Skip the next speaker check.
+  - **Default:** `true`
+
+- **`model.includeThoughts`** (boolean):
+  - **Description:** When enabled, AI thoughts are summarized and displayed.
+    Disabling this can save costs and improve performance.
   - **Default:** `true`
 
 #### `modelConfigs`

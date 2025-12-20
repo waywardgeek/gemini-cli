@@ -906,12 +906,14 @@ Return ONLY valid JSON with this exact format:
       for await (const event of stream) {
         switch (event.type) {
           case ServerGeminiEventType.Thought:
-            // Summarize each thought immediately and synchronously
-            await summarizeThoughtChunk(
-              event.value,
-              signal,
-              userMessageTimestamp,
-            );
+            if (settings?.merged?.model?.includeThoughts !== false) {
+              // Summarize each thought immediately and synchronously
+              await summarizeThoughtChunk(
+                event.value,
+                signal,
+                userMessageTimestamp,
+              );
+            }
             break;
           case ServerGeminiEventType.Content:
             fullResponseText += event.value;
@@ -994,6 +996,7 @@ Return ONLY valid JSON with this exact format:
       handleCitationEvent,
       handleChatModelEvent,
       summarizeThoughtChunk,
+      settings,
     ],
   );
   const submitQuery = useCallback(

@@ -737,6 +737,16 @@ const SETTINGS_SCHEMA = {
         description: 'Skip the next speaker check.',
         showInDialog: true,
       },
+      includeThoughts: {
+        type: 'boolean',
+        label: 'Include Thoughts',
+        category: 'Model',
+        requiresRestart: false,
+        default: true,
+        description:
+          'When enabled, AI thoughts are summarized and displayed. Disabling this can save costs and improve performance.',
+        showInDialog: true,
+      },
     },
   },
 

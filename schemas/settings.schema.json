@@ -339,6 +339,26 @@
               "markdownDescription": "Render output in plain-text to be more screen reader accessible\n\n- Category: `UI`\n- Requires restart: `yes`\n- Default: `false`",
               "default": false,
               "type": "boolean"
+            },
+            "ttsEnabled": {
+              "title": "Enable Text-to-Speech",
+              "description": "Enable Text-to-Speech (TTS) output.",
+              "markdownDescription": "Enable Text-to-Speech (TTS) output.\n\n- Category: `UI`\n- Requires restart: `no`\n- Default: `false`",
+              "default": false,
+              "type": "boolean"
+            },
+            "ttsSpeed": {
+              "title": "TTS Speed",
+              "description": "Speed of TTS output (1.0 is normal).",
+              "markdownDescription": "Speed of TTS output (1.0 is normal).\n\n- Category: `UI`\n- Requires restart: `no`\n- Default: `1`",
+              "default": 1,
+              "type": "number"
+            },
+            "ttsVoice": {
+              "title": "TTS Voice",
+              "description": "Voice to use for TTS output.",
+              "markdownDescription": "Voice to use for TTS output.\n\n- Category: `UI`\n- Requires restart: `no`",
+              "type": "string"
             }
           },
           "additionalProperties": false
@@ -433,6 +453,13 @@
           "title": "Skip Next Speaker Check",
           "description": "Skip the next speaker check.",
           "markdownDescription": "Skip the next speaker check.\n\n- Category: `Model`\n- Requires restart: `no`\n- Default: `true`",
+          "default": true,
+          "type": "boolean"
+        },
+        "includeThoughts": {
+          "title": "Include Thoughts",
+          "description": "When enabled, AI thoughts are summarized and displayed. Disabling this can save costs and improve performance.",
+          "markdownDescription": "When enabled, AI thoughts are summarized and displayed. Disabling this can save costs and improve performance.\n\n- Category: `Model`\n- Requires restart: `no`\n- Default: `true`",
           "default": true,
           "type": "boolean"
         }
