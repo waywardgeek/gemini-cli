@@ -13,19 +13,21 @@ interface InfoMessageProps {
   text: string;
   icon?: string;
   color?: string;
+  noMargin?: boolean;
 }
 
 export const InfoMessage: React.FC<InfoMessageProps> = ({
   text,
   icon,
   color,
+  noMargin,
 }) => {
   color ??= theme.status.warning;
   const prefix = icon ?? 'ℹ ';
   const prefixWidth = prefix.length;
 
   return (
-    <Box flexDirection="row" marginTop={1}>
+    <Box flexDirection="row" marginTop={noMargin ? 0 : 1}>
       <Box width={prefixWidth}>
         <Text color={color}>{prefix}</Text>
       </Box>

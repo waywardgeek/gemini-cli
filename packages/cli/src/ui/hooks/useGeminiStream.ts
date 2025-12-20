@@ -121,7 +121,6 @@ export const useGeminiStream = (
   const [isResponding, setIsResponding] = useState<boolean>(false);
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [thought, setThought] = useState<ThoughtSummary | null>(null);
-  const thoughtAccumulatorRef = useRef<ThoughtSummary[]>([]); // Accumulate thoughts for summarization
   const thinkingHistoryRef = useRef<string>(''); // Keep history of thinking for the current tool chain
   const [pendingHistoryItem, pendingHistoryItemRef, setPendingHistoryItem] =
     useStateAndRef<HistoryItemWithoutId | null>(null);
@@ -814,6 +813,87 @@ export const useGeminiStream = (
     [addItem, pendingHistoryItemRef, setPendingHistoryItem, settings],
   );
 
+  // Summarize a single thought chunk synchronously
+  const summarizeThoughtChunk = useCallback(
+    async (
+      thought: ThoughtSummary,
+      signal: AbortSignal,
+      userMessageTimestamp: number,
+    ) => {
+      // Immediately show the thought in loading indicator
+      setThought(thought);
+
+      try {
+        const thoughtText = `**${thought.subject}**\n${thought.description}`;
+
+        // Construct prompt with history
+        const historyContext = thinkingHistoryRef.current
+          ? `Previous thinking history:\n${thinkingHistoryRef.current}\n\n`
+          : '';
+
+        const prompt = `${historyContext}Summarize this internal reasoning concisely. Include specific details like filenames, hypotheses, or next steps. Start directly with the substance - don't introduce or explain that you're summarizing:
+
+${thoughtText}
+
+Return ONLY valid JSON with this exact format:
+{"subject": "short summary (max 50 chars)", "description": "one sentence summary"}`;
+
+        const systemInstruction = `You are the AI's internal monologue. Write in first person using 'I' statements. Go directly into your reasoning without preambles like 'Here's what I'm thinking' or 'Let me explain'. Just start with your actual thoughts about what you're investigating, what you discovered, and what you're doing next.`;
+
+        const result = await config.getBaseLlmClient().generateContent({
+          modelConfigKey: { model: 'gemini-2.0-flash-exp' },
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          systemInstruction: {
+            role: 'system',
+            parts: [{ text: systemInstruction }],
+          },
+          abortSignal: signal,
+          promptId: 'thought-summarization',
+        });
+
+        const responseText = getResponseText(result);
+        if (responseText) {
+          const jsonMatch = responseText.match(/\{[^}]+\}/);
+          if (jsonMatch) {
+            const parsed = JSON.parse(jsonMatch[0]);
+            const summarized = {
+              subject: parsed.subject || thought.subject,
+              description: parsed.description || thought.description,
+            };
+
+            // Update history with new thinking and summary
+            thinkingHistoryRef.current += `\n\nThinking:\n${thoughtText}\n\nSummary:\n${summarized.description}`;
+
+            // Update loading indicator with summarized subject
+            setThought(summarized);
+
+            // Speak the thinking summary
+            ttsService.speak(summarized.description);
+
+            // Add thinking as a separate message to history
+            const thinkingItem: HistoryItemWithoutId = {
+              type: 'thinking',
+              text: summarized.description,
+              color: '#9D7CD8', // AccentPurple
+            };
+            addItem(thinkingItem, userMessageTimestamp);
+          }
+        }
+      } catch (_error) {
+        // On error, loading indicator already shows original thought (set above)
+        // Add original thought to history
+        ttsService.speak(thought.description);
+        const thinkingItem: HistoryItemWithoutId = {
+          type: 'thinking',
+          text: thought.description,
+          color: '#9D7CD8', // AccentPurple
+        };
+        addItem(thinkingItem, userMessageTimestamp);
+      }
+    },
+    [config, setThought, addItem],
+  );
+
   const processGeminiStreamEvents = useCallback(
     async (
       stream: AsyncIterable<GeminiEvent>,
@@ -826,8 +906,12 @@ export const useGeminiStream = (
       for await (const event of stream) {
         switch (event.type) {
           case ServerGeminiEventType.Thought:
-            // Accumulate thoughts for later summarization
-            thoughtAccumulatorRef.current.push(event.value);
+            // Summarize each thought immediately and synchronously
+            await summarizeThoughtChunk(
+              event.value,
+              signal,
+              userMessageTimestamp,
+            );
             break;
           case ServerGeminiEventType.Content:
             fullResponseText += event.value;
@@ -888,102 +972,6 @@ export const useGeminiStream = (
         }
       }
 
-      // THINKING SUMMARIZATION: Summarize accumulated thoughts after stream completes
-      // Thinking happens BEFORE tool calls, so we summarize here to display during tool execution
-      if (thoughtAccumulatorRef.current.length > 0) {
-        const thoughts = thoughtAccumulatorRef.current;
-
-        // Immediately show first thought subject in loading indicator while we summarize
-        setThought(thoughts[0]);
-
-        try {
-          const thoughtsText = thoughts
-            .map((t) => `**${t.subject}**\n${t.description}`)
-            .join('\n\n');
-
-          // Construct prompt with history
-          const historyContext = thinkingHistoryRef.current
-            ? `Previous thinking history:\n${thinkingHistoryRef.current}\n\n`
-            : '';
-
-          const prompt = `${historyContext}Summarize this internal reasoning concisely. Include specific details like filenames, hypotheses, or next steps. Start directly with the substance - don't introduce or explain that you're summarizing:
-
-${thoughtsText}
-
-Return ONLY valid JSON with this exact format:
-{"subject": "short summary (max 50 chars)", "description": "one sentence summary"}`;
-
-          const systemInstruction = `You are the AI's internal monologue. Write in first person using 'I' statements. Go directly into your reasoning without preambles like 'Here's what I'm thinking' or 'Let me explain'. Just start with your actual thoughts about what you're investigating, what you discovered, and what you're doing next.`;
-
-          const result = await config.getBaseLlmClient().generateContent({
-            modelConfigKey: { model: 'gemini-2.0-flash-exp' },
-            contents: [{ role: 'user', parts: [{ text: prompt }] }],
-            systemInstruction: {
-              role: 'system',
-              parts: [{ text: systemInstruction }],
-            },
-            abortSignal: signal,
-            promptId: 'thought-summarization',
-          });
-
-          const responseText = getResponseText(result);
-          if (responseText) {
-            const jsonMatch = responseText.match(/\{[^}]+\}/);
-            if (jsonMatch) {
-              const parsed = JSON.parse(jsonMatch[0]);
-              const summarized = {
-                subject: parsed.subject || thoughts[0].subject,
-                description: parsed.description || thoughts[0].description,
-              };
-
-              // Update history with new thinking and summary
-              thinkingHistoryRef.current += `\n\nThinking:\n${thoughtsText}\n\nSummary:\n${summarized.description}`;
-
-              // Update loading indicator with summarized subject
-              setThought(summarized);
-
-              // Speak the thinking summary
-              ttsService.speak(`Thinking: ${summarized.description}`);
-
-              // Prepend full summary to Gemini's response text in chat
-              const summaryText = `**Thinking:** ${summarized.description}\n\n`;
-              setPendingHistoryItem((item) => {
-                if (
-                  item &&
-                  (item.type === 'gemini' || item.type === 'gemini_content')
-                ) {
-                  return {
-                    ...item,
-                    text: summaryText + item.text,
-                  };
-                }
-                return item;
-              });
-            }
-          }
-        } catch (_error) {
-          // On error, loading indicator already shows first thought (set above)
-          // Still prepend to chat on error
-          const firstThought = thoughts[0];
-          if (firstThought) {
-            const summaryText = `**Thinking:** ${firstThought.description}\n\n`;
-            setPendingHistoryItem((item) => {
-              if (
-                item &&
-                (item.type === 'gemini' || item.type === 'gemini_content')
-              ) {
-                return {
-                  ...item,
-                  text: summaryText + item.text,
-                };
-              }
-              return item;
-            });
-          }
-        }
-        thoughtAccumulatorRef.current = [];
-      }
-
       // Speak the accumulated response text
       if (fullResponseText.trim()) {
         ttsService.speak(fullResponseText);
@@ -1005,9 +993,7 @@ Return ONLY valid JSON with this exact format:
       handleContextWindowWillOverflowEvent,
       handleCitationEvent,
       handleChatModelEvent,
-      config,
-      setThought,
-      setPendingHistoryItem,
+      summarizeThoughtChunk,
     ],
   );
   const submitQuery = useCallback(
@@ -1072,7 +1058,6 @@ Return ONLY valid JSON with this exact format:
               }
               startNewPrompt();
               setThought(null); // Reset thought when starting a new prompt
-              thoughtAccumulatorRef.current = []; // Clear thought accumulator for new turn
               thinkingHistoryRef.current = ''; // Reset thinking history for new turn
             }
 

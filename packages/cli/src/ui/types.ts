@@ -114,6 +114,13 @@ export type HistoryItemInfo = HistoryItemBase & {
   color?: string;
 };
 
+export type HistoryItemThinking = HistoryItemBase & {
+  type: 'thinking';
+  text: string;
+  icon?: string;
+  color?: string;
+};
+
 export type HistoryItemError = HistoryItemBase & {
   type: 'error';
   text: string;
@@ -272,6 +279,7 @@ export type HistoryItemWithoutId =
   | HistoryItemGemini
   | HistoryItemGeminiContent
   | HistoryItemInfo
+  | HistoryItemThinking
   | HistoryItemError
   | HistoryItemWarning
   | HistoryItemAbout
@@ -296,6 +304,7 @@ export enum MessageType {
   INFO = 'info',
   ERROR = 'error',
   WARNING = 'warning',
+  THINKING = 'thinking',
   USER = 'user',
   ABOUT = 'about',
   HELP = 'help',
