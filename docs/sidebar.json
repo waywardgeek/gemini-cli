@@ -7,8 +7,33 @@
         "slug": "docs"
       },
       {
-        "label": "Architecture overview",
-        "slug": "docs/architecture"
+        "label": "Architecture",
+        "items": [
+          {
+            "label": "Overview",
+            "slug": "docs/architecture"
+          },
+          {
+            "label": "AI Thinking",
+            "slug": "docs/architecture/ai-thinking-summarization"
+          },
+          {
+            "label": "Unified TTS",
+            "slug": "docs/architecture/unified-tts-architecture"
+          },
+          {
+            "label": "Remote Audio Bridge",
+            "slug": "docs/architecture/remote-audio-bridge"
+          },
+          {
+            "label": "Flow Control",
+            "slug": "docs/architecture/flow-control-interrupts"
+          },
+          {
+            "label": "Collaboration Hints",
+            "slug": "docs/architecture/real-time-collaboration"
+          }
+        ]
       },
       {
         "label": "Contribution guide",
