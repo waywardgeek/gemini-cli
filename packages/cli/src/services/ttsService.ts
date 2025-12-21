@@ -22,6 +22,10 @@ export class TTSService {
     this.config = config;
   }
 
+  get isActive(): boolean {
+    return this.isSpeaking;
+  }
+
   speak(text: string) {
     if (!this.config.enabled) return;
 

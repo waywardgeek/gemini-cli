@@ -412,8 +412,16 @@ export const useGeminiStream = (
 
   useKeypress(
     (key) => {
-      if (key.name === 'escape' && !isShellFocused) {
-        cancelOngoingRequest();
+      if (key.name === 'escape') {
+        // If TTS is speaking, stop it but don't cancel the request
+        if (ttsService.isActive) {
+          ttsService.stop();
+          return;
+        }
+
+        if (!isShellFocused) {
+          cancelOngoingRequest();
+        }
       }
     },
     {
