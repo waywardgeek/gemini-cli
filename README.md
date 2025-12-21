@@ -19,11 +19,14 @@ happen.
 - **⏸️ Pause/Resume**: Pause the AI at any point, inspect the current state, and
   resume when you're ready.
   [[Issue: Pause tool calls while I read Gemini's thinking anc chat]](https://github.com/google-gemini/gemini-cli/issues/15055)
-- **🗣️ Text-to-Speech (TTS)**: Listen to the AI's thought process in real-time.
-  [[Issue: TTS output of just chat and thinking summaries]](https://github.com/google-gemini/gemini-cli/issues/15054)
 - **💡 Streamlined Thinking Display**: A clear, concise view of the AI's
   reasoning and actions.
   [[Issue: Summarize Gemini 3.0 Pro's thinking]](https://github.com/google-gemini/gemini-cli/issues/15052)
+- **🗣️ Text-to-Speech (TTS)**: Listen to the AI's thought process in real-time.
+  [[Issue: TTS output of just chat and thinking summaries]](https://github.com/google-gemini/gemini-cli/issues/15054)
+- ** Unified Text to Speech Architecture ** Listen to Gemini CLI running locally
+  or remotely
+  [[Issue: Remote Audio Server for TTS]](https://github.com/google-gemini/gemini-cli/issues/15409)
 
 These features work together to keep you in control and ensure you remain the
 expert on your codebase. Learn more in our
