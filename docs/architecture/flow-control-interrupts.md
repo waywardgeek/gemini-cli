@@ -67,3 +67,30 @@ system).
 - **Global Context:** A `UIContext` or similar state store holds the `isPaused`,
   `isSpeaking`, and `isGenerating` flags to coordinate these interruptions
   across different components.
+
+## Proposal: Reading Speed Rate-Limiting
+
+_Status: Proposed (Not Implemented)_
+
+To prevent the AI from "sprinting ahead" before the user has comprehended the
+context, a new rate-limiting mechanism is proposed.
+
+### Mechanism
+
+1.  **Calculation:**
+    - `Word Count` = `Total Characters Displayed (Chat + Thinking)` / 5.
+    - `Required Read Time` = `Word Count` / `User WPM Config` (Words Per
+      Minute).
+2.  **Tool Gating:**
+    - Before the `CoreToolScheduler` executes any tool, it checks:
+      `Time Elapsed < Required Read Time`.
+    - If the user hasn't had enough time, the system enters a specific
+      `Auto-Paused` state.
+3.  **Visual Feedback:**
+    - The UI displays a countdown or indicator: "Waiting for reading..."
+4.  **User Override (Escape / Space):**
+    - Pressing `Escape` (or `Space`) during this auto-wait period serves a dual
+      purpose:
+      - Stops TTS (if playing).
+      - **Immediately unpauses** the tool execution, signifying "I've caught up,
+        proceed."
