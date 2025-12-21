@@ -584,6 +584,20 @@ const SETTINGS_SCHEMA = {
             description: 'Enable Text-to-Speech (TTS) output.',
             showInDialog: true,
           },
+          ttsStrategy: {
+            type: 'enum',
+            label: 'TTS Strategy',
+            category: 'UI',
+            requiresRestart: true,
+            default: 'local',
+            description:
+              'Strategy for TTS: "local" (system default) or "remote" (browser bridge).',
+            showInDialog: true,
+            options: [
+              { value: 'local', label: 'Local (System)' },
+              { value: 'remote', label: 'Remote (Browser)' },
+            ],
+          },
           ttsSpeed: {
             type: 'number',
             label: 'TTS Speed',

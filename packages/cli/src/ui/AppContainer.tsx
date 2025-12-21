@@ -1453,10 +1453,12 @@ Logging in with Google... Restarting Gemini CLI to continue.
   // Update TTS config
   useEffect(() => {
     const accessibility = config.getAccessibility();
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     ttsService.updateConfig({
       enabled: accessibility.ttsEnabled ?? false,
       speed: accessibility.ttsSpeed ?? 1.0,
       voice: accessibility.ttsVoice,
+      strategy: accessibility.ttsStrategy ?? 'local',
     });
   }, [config]);
 

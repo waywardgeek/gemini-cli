@@ -102,6 +102,7 @@ export interface AccessibilitySettings {
   disableLoadingPhrases?: boolean;
   screenReader?: boolean;
   ttsEnabled?: boolean;
+  ttsStrategy?: 'local' | 'remote';
   ttsSpeed?: number;
   ttsVoice?: string;
 }

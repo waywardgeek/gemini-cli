@@ -211,14 +211,6 @@ export interface SummarizeToolOutputSettings {
   tokenBudget?: number;
 }
 
-export interface AccessibilitySettings {
-  disableLoadingPhrases?: boolean;
-  screenReader?: boolean;
-  ttsEnabled?: boolean;
-  ttsSpeed?: number;
-  ttsVoice?: string;
-}
-
 export interface SessionRetentionSettings {
   /** Enable automatic session cleanup */
   enabled?: boolean;

@@ -347,6 +347,14 @@
               "default": false,
               "type": "boolean"
             },
+            "ttsStrategy": {
+              "title": "TTS Strategy",
+              "description": "Strategy for TTS: \"local\" (system default) or \"remote\" (browser bridge).",
+              "markdownDescription": "Strategy for TTS: \"local\" (system default) or \"remote\" (browser bridge).\n\n- Category: `UI`\n- Requires restart: `yes`\n- Default: `local`",
+              "default": "local",
+              "type": "string",
+              "enum": ["local", "remote"]
+            },
             "ttsSpeed": {
               "title": "TTS Speed",
               "description": "Speed of TTS output (1.0 is normal).",
