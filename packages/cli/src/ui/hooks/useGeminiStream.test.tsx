@@ -973,14 +973,16 @@ describe('useGeminiStream', () => {
     };
 
     it('should cancel an in-progress stream when escape is pressed', async () => {
-      mockSendMessageStream.mockImplementation((_query, signal) => (async function* () {
+      mockSendMessageStream.mockImplementation((_query, signal) =>
+        (async function* () {
           yield { type: ServerGeminiEventType.Content, value: 'Part 1' };
           // Keep the stream open until aborted
           await new Promise<void>((resolve) => {
             if (signal.aborted) return resolve();
             signal.addEventListener('abort', () => resolve());
           });
-        })());
+        })(),
+      );
 
       const { result } = renderTestHook();
 
@@ -1014,14 +1016,16 @@ describe('useGeminiStream', () => {
 
     it('should call onCancelSubmit handler when escape is pressed', async () => {
       const cancelSubmitSpy = vi.fn();
-      mockSendMessageStream.mockImplementation((_query, signal) => (async function* () {
+      mockSendMessageStream.mockImplementation((_query, signal) =>
+        (async function* () {
           yield { type: ServerGeminiEventType.Content, value: 'Part 1' };
           // Keep the stream open until aborted
           await new Promise<void>((resolve) => {
             if (signal.aborted) return resolve();
             signal.addEventListener('abort', () => resolve());
           });
-        })());
+        })(),
+      );
 
       const { result } = renderHook(() =>
         useGeminiStream(
@@ -1057,14 +1061,16 @@ describe('useGeminiStream', () => {
 
     it('should call setShellInputFocused(false) when escape is pressed', async () => {
       const setShellInputFocusedSpy = vi.fn();
-      mockSendMessageStream.mockImplementation((_query, signal) => (async function* () {
+      mockSendMessageStream.mockImplementation((_query, signal) =>
+        (async function* () {
           yield { type: ServerGeminiEventType.Content, value: 'Part 1' };
           // Keep the stream open until aborted
           await new Promise<void>((resolve) => {
             if (signal.aborted) return resolve();
             signal.addEventListener('abort', () => resolve());
           });
-        })());
+        })(),
+      );
 
       const { result } = renderHook(() =>
         useGeminiStream(
@@ -1121,12 +1127,14 @@ describe('useGeminiStream', () => {
         continueStream = resolve;
       });
 
-      mockSendMessageStream.mockImplementation((_query, signal) => (async function* () {
+      mockSendMessageStream.mockImplementation((_query, signal) =>
+        (async function* () {
           yield { type: ServerGeminiEventType.Content, value: 'Initial' };
           await streamPromise; // Wait until we manually continue
           if (signal.aborted) return; // Exit if aborted
           yield { type: ServerGeminiEventType.Content, value: ' Canceled' };
-        })());
+        })(),
+      );
 
       const { result } = renderTestHook();
 

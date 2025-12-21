@@ -204,6 +204,26 @@ export const InputPrompt: React.FC<InputPromptProps> = ({
     }
   }, [showEscapePrompt, onEscapePromptChange]);
 
+  // **Pause/Unpause Logic**
+  // Automatically manage pause state based on chat input content
+  useEffect(() => {
+    // Only auto-pause/unpause when we are in a state that can be paused (Responding or Paused)
+    const canPause =
+      streamingState === StreamingState.Responding ||
+      streamingState === StreamingState.Paused;
+
+    if (!canPause) {
+      return;
+    }
+
+    const hasText = buffer.text.length > 0;
+    if (hasText && !isPaused) {
+      setIsPaused(true);
+    } else if (!hasText && isPaused) {
+      setIsPaused(false);
+    }
+  }, [buffer.text, streamingState, isPaused, setIsPaused]);
+
   // Clear escape prompt timer on unmount
   useEffect(
     () => () => {
@@ -427,35 +447,6 @@ export const InputPrompt: React.FC<InputPromptProps> = ({
         // Ensure we never accidentally interpret paste as regular input.
         buffer.handleInput(key);
         return;
-      }
-
-      // **Pause/Unpause Logic**
-      // When user types during tool execution, auto-pause
-      const isTextInputKey =
-        key.sequence &&
-        key.sequence.length === 1 &&
-        !key.ctrl &&
-        !key.meta &&
-        key.name !== 'return' &&
-        key.name !== 'escape' &&
-        key.name !== 'tab';
-
-      if (
-        streamingState === StreamingState.Responding &&
-        (isTextInputKey || key.name === 'space')
-      ) {
-        setIsPaused(true);
-      }
-
-      // When paused, unpause if: Enter (handled in submit), backspace to empty, or space when empty
-      if (streamingState === StreamingState.Paused) {
-        if (key.name === 'backspace' && buffer.text.length === 1) {
-          // About to backspace to empty - unpause
-          setIsPaused(false);
-        } else if (key.name === 'space' && buffer.text === '') {
-          // Space when empty - unpause (only when truly empty, not just whitespace)
-          setIsPaused(false);
-        }
       }
 
       if (vimHandleInput && vimHandleInput(key)) {
@@ -902,8 +893,6 @@ export const InputPrompt: React.FC<InputPromptProps> = ({
       kittyProtocol.enabled,
       tryLoadQueuedMessages,
       setBannerVisible,
-      streamingState,
-      setIsPaused,
     ],
   );
 
