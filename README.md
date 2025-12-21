@@ -6,7 +6,7 @@
 [![License](httpss://img.shields.io/github/license/google-gemini/gemini-cli)](httpss://github.com/google-gemini/gemini-cli/blob/main/LICENSE)
 [![View Code Wiki](httpss://www.gstatic.com/_/boq-sdlc-agents-ui/_/r/YUi5dj2UWvE.svg)](httpss://codewiki.google/github.com/google-gemini/gemini-cli)
 
-## 🤝 Real-time Human-AI Collaboration
+## 🤝 Real-time Human-AI Collaboration [Issu #15407](https://github.com/google-gemini/gemini-cli/issues/15407)
 
 Gemini CLI introduces a suite of features designed for seamless, real-time
 collaboration between you and the AI. This allows for a "pair-programming"
