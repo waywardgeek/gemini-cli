@@ -2,71 +2,42 @@
 
 ## Overview
 
-As the Gemini CLI evolved into a real-time, interactive tool with audio
-capabilities, simple linear execution became insufficient. The "Flow Control &
-Interrupt Handling" architecture introduces complex state management to handle
-pausing, resuming, and context-sensitive interruptions. This ensures the user
-remains in control of both the visual generation and the audio output.
+The "Flow Control & Interrupt Handling" architecture ensures the user remains in
+control of the high-velocity interaction loop. It manages state transitions
+between Paused, Responding, and Idle, and handles interruptions gracefully.
 
-## Key Features
+## Architecture & Implementation
 
-### 1. Pause and Resume (`Ctrl+Z` / Spacebar)
+### 1. Key Matching Logic
 
-The CLI implements a pause state that halts the execution loop (tool calls,
-model generation display).
+- **Location:** `packages/cli/src/ui/keyMatchers.ts`
+- **Role:** Centralizes the logic for detecting specific key combinations (e.g.,
+  `Ctrl+Space`, `Escape`).
+- **Usage:** Used by the `useKeypress` hook in `AppContainer.tsx` and
+  `useGeminiStream.ts` to trigger actions.
 
-- **State Machine:** The `MainContent` loop checks a `isPaused` flag.
-- **Interaction:**
-  - When Paused: The UI displays a "PAUSED" indicator.
-  - **Spacebar:** In the paused context, the Spacebar toggles the pause state
-    (re-enabling execution).
-  - **Input Protection:** While paused, user input is buffered or handled
-    specifically to avoid "type-ahead" issues that could confuse the model upon
-    resumption.
+### 2. Pause/Resume State
 
-### 2. Decoupled Escape Logic
+- **Location:** `packages/cli/src/ui/hooks/useGeminiStream.ts`
+- **State:** Uses `useStateAndRef` (or standard `useState`) to track `isPaused`.
+- **Propagation:** The `isPaused` state is passed down to the
+  `useReactToolScheduler`.
+- **Tool Gating:** The scheduler (`CoreToolScheduler` via
+  `useReactToolScheduler`) checks this flag before starting new tool executions.
+  If `isPaused` is true, it buffers the tools until resumed.
 
-Originally, `Escape` or `Ctrl+C` was a "kill switch". The new design
-(`75b98f3f8`) introduces nuance:
+### 3. Decoupled Interrupts (Escape vs. Ctrl+Space)
 
-- **Scenario A: Audio is Playing:**
-  - Action: User presses `Escape`.
-  - Result: Audio stops immediately (`TtsService.stop()`). Text generation
-    _continues_. The user just wanted to silence the voice, not kill the job.
-
-- **Scenario B: Audio is Silent (or stopped), Text is Generating:**
-  - Action: User presses `Escape`.
-  - Result: The generation request is cancelled. The standard cancellation token
-    is triggered.
-
-This logic is implemented in the key matcher utility
-(`packages/cli/src/ui/utils/keyMatchers.ts`) and the main event loop.
-
-### 3. Dedicated Audio Stop (`Ctrl+Space`)
-
-To further prevent accidental cancellations, a dedicated "Stop Audio" shortcut
-was added.
-
-- **Binding:** `Ctrl+Space`.
-- **Behavior:** Solely targets the TTS subsystem. It clears the TTS queue and
-  stops the current utterance. It has _zero_ side effects on the AI's thinking
-  or generation process.
-
-### 4. Input Handling During Pauses
-
-A complex edge case (`abb110436`) was handling user input while paused. The
-system now allows the user to type into the input field even while the AI's
-output is paused. This enables a workflow where the user sees something, pauses,
-types a hint or correction, and potentially injects it (related to the Hints
-system).
-
-## Technical Implementation
-
-- **Ink Hooks:** Heavy use of `useInput` hooks in React/Ink to capture
-  keystrokes globally or locally depending on focus.
-- **Global Context:** A `UIContext` or similar state store holds the `isPaused`,
-  `isSpeaking`, and `isGenerating` flags to coordinate these interruptions
-  across different components.
+- **Location:** `packages/cli/src/ui/hooks/useGeminiStream.ts` (inside
+  `useKeypress` handler).
+- **Logic:**
+  - **Ctrl+Space:** Calls `ttsService.stop()` exclusively. Does not affect
+    `streamingState`.
+  - **Escape:**
+    - If `ttsService` is speaking: Calls `ttsService.stop()`.
+    - If `ttsService` is silent AND `streamingState` is `Responding`: Calls
+      `cancelOngoingRequest()`, which triggers the `AbortController` to halt the
+      AI generation.
 
 ## Proposal: Reading Speed Rate-Limiting
 

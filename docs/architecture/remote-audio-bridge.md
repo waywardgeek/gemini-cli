@@ -2,75 +2,59 @@
 
 ## Overview
 
-The Remote Audio Bridge is a specialized subsystem designed to overcome the
-limitations of local CLI text-to-speech engines. By offloading the synthesis to
-a modern web browser (Chrome), the CLI gains access to the Web Speech API's
-high-quality, neural voices. This is achieved via a local orchestration server,
-the `a2a-server` (Audio-to-Audio), and a Server-Sent Events (SSE) protocol.
+The Remote Audio Bridge enables the CLI to output high-quality speech by
+offloading synthesis to a modern web browser (Chrome). This is essential for
+users working on remote machines (SSH) who need audio output on their local
+device.
 
-## System Components
+## Architecture & Implementation
 
-### 1. The A2A Server (`packages/a2a-server`)
+### 1. The Server
 
-A lightweight Node.js Express server that runs alongside the CLI (or is spawned
-by it).
+- **Location:** `packages/cli/src/services/audioBridgeServer.ts` (Internal
+  implementation used by the CLI).
+- **Technology:** A lightweight Node.js `http.Server`.
+- **Port:** Defaults to `4444`.
 
-- **Role:** Acts as a message broker between the CLI process and the Browser.
-- **Endpoints:**
-  - `GET /events`: The SSE endpoint that the browser connects to.
-  - `POST /speak`: The endpoint the CLI uses to send text.
-  - `POST /control`: For commands like `stop`, `pause`, `resume`.
+### 2. Endpoints & Protocol
 
-### 2. The Browser Client
+The server exposes two primary routes:
 
-A static HTML/JS page (served by the A2A server) that the user opens.
+- **`GET /` (Client):** Serves a static HTML/JS page containing the client-side
+  logic.
+- **`GET /events` (SSE):** Establishes a Server-Sent Events stream.
 
-- **Speech Synthesis:** Uses `window.speechSynthesis` API.
-- **Connection:** Establishes an `EventSource` connection to
-  `localhost:<port>/events`.
-- **Logic:**
-  - Listens for `speak` events.
-  - Manages the browser's internal speech queue.
-  - Reports status (speaking/idle) back to the server (optional, depending on
-    implementation depth).
+### 3. The Protocol (SSE)
 
-### 3. The CLI Client
+Communication is one-way (Server -> Browser) via JSON payloads:
 
-The `AudioBridgeClient` within the CLI.
+- **Speak Event:**
+  ```json
+  {
+    "type": "speak",
+    "text": "Hello world",
+    "speed": 1.0,
+    "voice": "Google US English"
+  }
+  ```
+- **Cancel Event:**
+  ```json
+  { "type": "cancel" }
+  ```
 
-- **Discovery:** Knows the port of the A2A server.
-- **Transmission:** Sends HTTP POST requests with JSON payloads containing the
-  text to speak.
+### 4. Client-Side Logic (Browser)
 
-## Protocol Design
+The served HTML includes a script that:
 
-### Communication Flow
+1.  Connects to `/events` using `EventSource`.
+2.  Listens for `speak` messages.
+3.  Calls `window.speechSynthesis.speak()` with the provided text and
+    configuration.
+4.  Listens for `cancel` messages to invoke `window.speechSynthesis.cancel()`.
 
-1.  **Initialization:**
-    - CLI starts `a2a-server`.
-    - User opens `http://localhost:<port>` in Chrome.
-    - Browser subscribes to SSE.
+## Security
 
-2.  **Speaking:**
-    - CLI -> `POST /speak { text: "Hello world", rate: 1.0 }` -> A2A Server.
-    - A2A Server -> SSE Event `type: speak, data: { text: ... }` -> Browser.
-    - Browser -> `speechSynthesis.speak(...)`.
-
-3.  **Stopping:**
-    - CLI -> `POST /control { command: "stop" }` -> A2A Server.
-    - A2A Server -> SSE Event `type: control, command: "stop"` -> Browser.
-    - Browser -> `speechSynthesis.cancel()`.
-
-## Security & Constraints
-
-- **Localhost Only:** The server binds only to `127.0.0.1` to prevent network
-  exposure.
-- **Browser Autoplay Policy:** Browsers block audio contexts that start without
-  user interaction. The design requires the user to interact with the webpage
-  (click a "Start" button) once to "unlock" the audio context for the session.
-
-## Error Handling
-
-- **Disconnection:** If the browser tab is closed, the A2A server buffers
-  messages or drops them (depending on config). The CLI can detect the failure
-  to POST and fallback to Local TTS.
+- **Localhost Binding:** The server listens on specific ports but is intended to
+  be forwarded (e.g., via SSH tunneling or VS Code port forwarding) to the local
+  machine.
+- **CORS:** Headers are configured to allow access.
