@@ -79,7 +79,7 @@ export class TTSService {
     debugLogger.debug(`[TTS] Speaking: ${text.substring(0, 50)}...`);
 
     if (this.config.strategy === 'remote' && this.bridge) {
-      this.bridge.broadcast(text);
+      this.bridge.broadcast(text, this.config.speed, this.config.voice);
       // For remote, we don't have a callback for when it's done speaking
       // so we just assume it's done immediately for the queue's sake.
       // This might need better handling if we want to queue properly.

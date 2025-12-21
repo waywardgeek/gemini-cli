@@ -98,6 +98,7 @@ import { isAlternateBufferEnabled } from './ui/hooks/useAlternateBuffer.js';
 
 import { setupTerminalAndTheme } from './utils/terminalTheme.js';
 import { profiler } from './ui/components/DebugProfiler.js';
+import { ttsService } from './services/ttsService.js';
 
 const SLOW_RENDER_MS = 200;
 
@@ -283,6 +284,7 @@ export async function startInteractiveUI(
     });
 
   registerCleanup(() => instance.unmount());
+  registerCleanup(() => ttsService.stop());
 }
 
 export async function main() {

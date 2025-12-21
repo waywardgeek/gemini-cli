@@ -413,13 +413,13 @@ export const useGeminiStream = (
   useKeypress(
     (key) => {
       if (key.name === 'escape') {
-        // If TTS is speaking, stop it but don't cancel the request
-        if (ttsService.isActive) {
-          ttsService.stop();
-          return;
-        }
+        const ttsEnabled = config.getAccessibility().ttsEnabled;
 
-        if (!isShellFocused) {
+        if (ttsEnabled) {
+          // ESC only stops audio if TTS is enabled.
+          ttsService.stop();
+        } else if (!isShellFocused) {
+          // ESC cancels the request if TTS is disabled.
           cancelOngoingRequest();
         }
       }
