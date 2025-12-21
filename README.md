@@ -24,8 +24,8 @@ happen.
   [[Issue: Summarize Gemini 3.0 Pro's thinking]](https://github.com/google-gemini/gemini-cli/issues/15052)
 - **🗣️ Text-to-Speech (TTS)**: Listen to the AI's thought process in real-time.
   [[Issue: TTS output of just chat and thinking summaries]](https://github.com/google-gemini/gemini-cli/issues/15054)
-- ** Unified Text to Speech Architecture ** Listen to Gemini CLI running locally
-  or remotely
+- **🗣️ Unified Text to Speech Architecture** Listen to Gemini CLI running
+  locally or remotely
   [[Issue: Remote Audio Server for TTS]](https://github.com/google-gemini/gemini-cli/issues/15409)
 
 These features work together to keep you in control and ensure you remain the
