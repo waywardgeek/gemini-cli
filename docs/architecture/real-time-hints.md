@@ -45,15 +45,16 @@ streaming logic, and the system prompt.
 
 ## Affected Packages & Commits
 
-Implementing this feature typically involves changes to the following packages.
-Each of these upgrades is logically independent and should ideally be handled in
-separate git commits:
+The implementation of this feature involved changes to the following packages.
+Each of these upgrades was handled in separate git commits:
 
-1.  **`packages/cli` (UI Hooks):** Implementing `useMessageQueue` to support
+1.  **`packages/cli` (UI Hooks):** Implemented `useMessageQueue` to support
     buffering.
-2.  **`packages/cli` (Stream Logic):** Modifying `useGeminiStream.ts` to drain
+
+2.  **`packages/cli` (Stream Logic):** Modified `useGeminiStream.ts` to drain
     the queue and inject history during `handleCompletedTools`.
-3.  **`packages/core` (System Prompt):** Updating the system prompt to make the
+
+3.  **`packages/core` (System Prompt):** Updated the system prompt to make the
     model "Hint-aware".
 
 ## Workflow Example
