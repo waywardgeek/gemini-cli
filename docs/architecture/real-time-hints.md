@@ -1,4 +1,4 @@
-# Real-Time Human-AI Collaboration (Hints System)
+# Real-Time Hints
 
 ## Overview
 

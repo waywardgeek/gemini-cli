@@ -10,6 +10,10 @@
         "label": "Architecture",
         "items": [
           {
+            "label": "Human-AI Paradigm",
+            "slug": "docs/architecture/human-ai-collaboration-paradigm"
+          },
+          {
             "label": "Overview",
             "slug": "docs/architecture"
           },
@@ -30,8 +34,8 @@
             "slug": "docs/architecture/flow-control-interrupts"
           },
           {
-            "label": "Collaboration Hints",
-            "slug": "docs/architecture/real-time-collaboration"
+            "label": "Real-Time Hints",
+            "slug": "docs/architecture/real-time-hints"
           }
         ]
       },
